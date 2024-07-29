@@ -15,7 +15,7 @@ btf.onReceivedData(function (receivedData) {
         receiver.sendM0(btf.btf_receivedBuffer19())
         receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
     } else if (btf.isBetriebsart(receivedData, btf.e0Betriebsart.p2Fahrplan)) {
-    	
+        receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
     }
     receiver.rgbLEDs(receiver.eRGBled.a, 0x0000ff, true)
     btf.zeige5x5Buffer(receivedData)
