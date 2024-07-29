@@ -1,4 +1,5 @@
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    btf.set_timeoutDisbled(true)
     receiver.encoderStartStrecke(20)
     receiver.encoderSelectMotor(192)
 })
@@ -31,10 +32,11 @@ loops.everyInterval(700, function () {
         receiver.pinRelay(false)
     } else if (btf.timeout(1000)) {
         receiver.rgbLEDs(receiver.eRGBled.a, 0xff0000, true)
-    } else {
         receiver.dualMotor128(receiver.eDualMotor.M0_M1, 128)
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.ab, false)
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.cd, false)
         receiver.ringTone(false)
+    } else if (btf.timeout(1000, true)) {
+        receiver.rgbLEDs(receiver.eRGBled.a, 0x00ff00, false)
     }
 })
