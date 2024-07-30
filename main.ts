@@ -1,7 +1,5 @@
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
-    receiver.encoderStartStrecke(20)
-    receiver.encoderSelectMotor(192)
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
@@ -17,10 +15,11 @@ btf.onReceivedData(function (receivedData) {
     } else if (btf.isBetriebsart(receivedData, btf.e0Betriebsart.p2Fahrplan)) {
         receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
     }
-    receiver.setLedColors(receiver.eRGBled.a, 0x0000ff, true, true)
+    receiver.setLedColors(receiver.eRGBled.a, 0x0000ff, true, true, 20)
     btf.zeige5x5Buffer(receivedData)
     btf.zeige5x5Joystick(receivedData)
     receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
+    lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 2, 0, 7, btf.getAbstand(receivedData))
     lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, receiver.getQwiicUltrasonic(false))
 })
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
@@ -57,12 +56,12 @@ loops.everyInterval(700, function () {
     if (btf.timeout(60000, true)) {
         receiver.pinRelay(false)
     } else if (btf.timeout(1000)) {
-        receiver.setLedColors(receiver.eRGBled.a, 0xff0000, true, true)
+        receiver.setLedColors(receiver.eRGBled.a, 0xff0000, true, true, 20)
         receiver.dualMotor128(receiver.eDualMotor.M0_M1, 128)
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.ab, false)
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.cd, false)
         receiver.ringTone(false)
     } else if (btf.timeout(1000, true)) {
-        receiver.setLedColors(receiver.eRGBled.a, 0x00ff00, true, true)
+        receiver.setLedColors(receiver.eRGBled.a, 0x00ff00, true, true, 20)
     }
 })
