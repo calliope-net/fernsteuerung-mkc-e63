@@ -1,5 +1,7 @@
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
+    receiver.encoderStartStrecke(true, 20)
+    receiver.selectMotor(192)
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
