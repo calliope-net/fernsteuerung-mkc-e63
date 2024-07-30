@@ -1,7 +1,6 @@
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
-    receiver.encoderStartStrecke(true, 20)
-    receiver.selectMotor(192)
+    receiver.fahreStrecke(220, 4, 152)
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
@@ -31,9 +30,9 @@ let bWiederholung = false
 let dauerhaft_Knopf_B = false
 receiver.beimStart(
 receiver.eHardware.v3,
-96,
+95,
 true,
-67
+65
 )
 lcd20x4.initLCD(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4))
 lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 0, 0, 19, lcd20x4.lcd20x4_text("Maker Kit Car"))
@@ -64,6 +63,6 @@ loops.everyInterval(700, function () {
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.cd, false)
         receiver.ringTone(false)
     } else if (btf.timeout(1000, true)) {
-        receiver.setLedColors(receiver.eRGBled.a, 0x00ff00, true, true, 20)
+        receiver.setLedColors(receiver.eRGBled.a, 0x00ff00, true, false, 20)
     }
 })
