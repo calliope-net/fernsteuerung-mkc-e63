@@ -1,3 +1,6 @@
+input.onButtonEvent(Button.AB, btf.buttonEventValue(ButtonEvent.Hold), function () {
+    btf.buttonABhold()
+})
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
     receiver.fahreStrecke(220, 4, 152)
@@ -9,7 +12,12 @@ input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
 input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonBhold()
 })
-btf.onReceivedData(function (receivedData) {
+btf.onReceivedDataChanged(function (receivedData, changed) {
+    if (changed) {
+        receiver.selectMotor(128)
+        receiver.pinServo16(16)
+        receiver.setLedColorsOff()
+    }
     if (btf.isBetriebsart(receivedData, btf.e0Betriebsart.p0Fahren)) {
         receiver.sendM0(btf.btf_receivedBuffer19())
         receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
@@ -22,6 +30,9 @@ btf.onReceivedData(function (receivedData) {
     receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
     lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 2, 0, 7, btf.getAbstand(receivedData))
     lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, receiver.getQwiicUltrasonic(false))
+})
+btf.onReceivedData(function (receivedData) {
+	
 })
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
