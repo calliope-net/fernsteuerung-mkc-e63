@@ -18,6 +18,8 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
         receiver.pinServo16(16)
         receiver.setLedColorsOff()
     }
+    dauerhaft_Knopf_B = false
+    dauerhaft_Spurfolger = btf.isBetriebsart(receivedData, btf.e0Betriebsart.p1Lokal) && btf.getaktiviert(receivedData, btf.e3aktiviert.mc)
     if (btf.isBetriebsart(receivedData, btf.e0Betriebsart.p0Fahren)) {
         receiver.sendM0(btf.btf_receivedBuffer19())
         receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
@@ -38,6 +40,7 @@ input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function (
     btf.buttonAhold()
 })
 let bWiederholung = false
+let dauerhaft_Spurfolger = false
 let dauerhaft_Knopf_B = false
 receiver.beimStart(
 receiver.eHardware.v3,
