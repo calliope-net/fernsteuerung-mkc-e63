@@ -3,7 +3,13 @@ input.onButtonEvent(Button.AB, btf.buttonEventValue(ButtonEvent.Hold), function 
 })
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
-    receiver.fahreStrecke(220, 4, 152)
+    if (kreis_Knopf_A) {
+        receiver.fahreStrecke(220, 3, 153)
+    } else {
+        receiver.fahreStrecke(220, 29, 153)
+    }
+    receiver.pinServo16(16)
+    kreis_Knopf_A = !(kreis_Knopf_A)
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
@@ -33,15 +39,13 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 2, 0, 7, btf.getAbstand(receivedData))
     lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, receiver.getQwiicUltrasonic(false))
 })
-btf.onReceivedData(function (receivedData) {
-	
-})
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
 })
 let bWiederholung = false
 let dauerhaft_Spurfolger = false
 let dauerhaft_Knopf_B = false
+let kreis_Knopf_A = false
 receiver.beimStart(
 receiver.eHardware.v3,
 95,
