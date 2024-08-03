@@ -51,20 +51,30 @@ true,
 lcd20x4.initLCD(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4))
 lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 0, 0, 19, lcd20x4.lcd20x4_text("Maker Kit Car"))
 basic.forever(function () {
-    if (dauerhaft_Knopf_B) {
+    if (dauerhaft_Spurfolger && !(btf.timeout(1000))) {
+        receiver.beispielSpurfolger16(
+        btf.getByte(btf.btf_receivedBuffer19(), btf.eBufferPointer.mc, btf.eBufferOffset.b0_Motor),
+        btf.getByte(btf.btf_receivedBuffer19(), btf.eBufferPointer.md, btf.eBufferOffset.b0_Motor),
+        btf.getByte(btf.btf_receivedBuffer19(), btf.eBufferPointer.mc, btf.eBufferOffset.b1_Servo),
+        bWiederholung,
+        btf.getSensor(btf.btf_receivedBuffer19(), btf.eBufferPointer.mc, btf.eSensor.b6Abstand),
+        btf.getAbstand(btf.btf_receivedBuffer19())
+        )
+        bWiederholung = true
+    } else if (dauerhaft_Knopf_B && !(btf.timeout(30000, true))) {
         receiver.beispielSpurfolger16(
         192,
         160,
         31,
         bWiederholung,
-        false,
+        true,
         20
         )
         bWiederholung = true
     } else if (bWiederholung) {
         dauerhaft_Knopf_B = false
         bWiederholung = false
-        receiver.dualMotor128(receiver.eDualMotor.M0, 128)
+        receiver.selectMotor(128)
     }
 })
 loops.everyInterval(700, function () {
