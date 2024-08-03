@@ -82,7 +82,7 @@ basic.forever(function () {
     }
 })
 loops.everyInterval(700, function () {
-    if (btf.timeout(60000, true)) {
+    if (btf.timeout(60000, true) && !(dauerhaft_Spurfolger)) {
         receiver.pinRelay(false)
     } else if (btf.timeout(1000)) {
         receiver.setLedColors(receiver.eRGBled.a, 0xff0000, true, true, 20)
