@@ -1,5 +1,5 @@
 input.onButtonEvent(Button.AB, btf.buttonEventValue(ButtonEvent.Hold), function () {
-    btf.buttonABhold()
+    receiver.buttonABhold()
 })
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
