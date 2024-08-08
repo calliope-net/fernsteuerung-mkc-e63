@@ -20,8 +20,7 @@ input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function (
 })
 btf.onReceivedDataChanged(function (receivedData, changed) {
     if (changed) {
-        receiver.selectMotor(128)
-        receiver.pinServo16(16)
+        receiver.selectMotorStop(true)
         receiver.setLedColorsOff()
     }
     dauerhaft_Knopf_B = false
@@ -66,7 +65,7 @@ basic.forever(function () {
     } else if (bWiederholung) {
         dauerhaft_Knopf_B = false
         bWiederholung = false
-        receiver.selectMotor(128)
+        receiver.selectMotorStop(true)
     }
 })
 loops.everyInterval(700, function () {
