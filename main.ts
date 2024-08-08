@@ -39,6 +39,7 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
 })
+let bWiederholung = false
 let dauerhaft_Spurfolger = false
 let dauerhaft_Knopf_B = false
 let kreis_Knopf_A = false
@@ -52,6 +53,21 @@ lcd20x4.initLCD(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4))
 lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 0, 0, 19, lcd20x4.lcd20x4_text("Maker Kit Car"))
 basic.forever(function () {
     receiver.dauerhaft_SpurfolgerBuffer(dauerhaft_Spurfolger, btf.btf_receivedBuffer19())
+    if (dauerhaft_Knopf_B && !(btf.timeout(30000, true))) {
+        receiver.beispielSpurfolger16(
+        192,
+        160,
+        31,
+        bWiederholung,
+        true,
+        20
+        )
+        bWiederholung = true
+    } else if (bWiederholung) {
+        dauerhaft_Knopf_B = false
+        bWiederholung = false
+        receiver.selectMotor(128)
+    }
 })
 loops.everyInterval(700, function () {
     if (btf.timeout(60000, true) && !(dauerhaft_Spurfolger)) {
