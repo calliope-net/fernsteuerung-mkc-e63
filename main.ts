@@ -25,7 +25,7 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
         receiver.setLedColorsOff()
     }
     dauerhaft_Knopf_B = false
-    dauerhaft_Spurfolger = btf.isBetriebsart(receivedData, btf.e0Betriebsart.p1Lokal) && btf.getaktiviert(receivedData, btf.e3aktiviert.mc)
+    dauerhaft_Spurfolger = cb2.set_dauerhaft_Spurfolger(btf.btf_receivedBuffer19(), btf.e3aktiviert.mc)
     receiver.fahreJoystick(btf.btf_receivedBuffer19())
     receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
     receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
@@ -39,7 +39,6 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
 })
-let bWiederholung = false
 let dauerhaft_Spurfolger = false
 let dauerhaft_Knopf_B = false
 let kreis_Knopf_A = false
@@ -52,31 +51,7 @@ true,
 lcd20x4.initLCD(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4))
 lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 0, 0, 19, lcd20x4.lcd20x4_text("Maker Kit Car"))
 basic.forever(function () {
-    if (dauerhaft_Spurfolger && !(btf.timeout(1000))) {
-        receiver.beispielSpurfolger16(
-        btf.getByte(btf.btf_receivedBuffer19(), btf.eBufferPointer.mc, btf.eBufferOffset.b0_Motor),
-        btf.getByte(btf.btf_receivedBuffer19(), btf.eBufferPointer.md, btf.eBufferOffset.b0_Motor),
-        btf.getByte(btf.btf_receivedBuffer19(), btf.eBufferPointer.mc, btf.eBufferOffset.b1_Servo),
-        bWiederholung,
-        btf.getSensor(btf.btf_receivedBuffer19(), btf.eBufferPointer.mc, btf.eSensor.b6Abstand),
-        btf.getAbstand(btf.btf_receivedBuffer19())
-        )
-        bWiederholung = true
-    } else if (dauerhaft_Knopf_B && !(btf.timeout(30000, true))) {
-        receiver.beispielSpurfolger16(
-        192,
-        160,
-        31,
-        bWiederholung,
-        true,
-        20
-        )
-        bWiederholung = true
-    } else if (bWiederholung) {
-        dauerhaft_Knopf_B = false
-        bWiederholung = false
-        receiver.selectMotor(128)
-    }
+    receiver.dauerhaft_SpurfolgerBuffer(dauerhaft_Spurfolger, btf.btf_receivedBuffer19())
 })
 loops.everyInterval(700, function () {
     if (btf.timeout(60000, true) && !(dauerhaft_Spurfolger)) {
