@@ -11,6 +11,11 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     receiver.pinServo16(16)
     kreis_Knopf_A = !(kreis_Knopf_A)
 })
+receiver.onSpurEvent(function (links_hell, rechts_hell) {
+    receiver.selectMotorStop(true)
+    lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 1, 0, 5, links_hell)
+    lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 1, 6, 11, rechts_hell)
+})
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
     dauerhaft_Knopf_B = !(dauerhaft_Knopf_B)
