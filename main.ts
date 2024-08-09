@@ -48,6 +48,7 @@ receiver.eHardware.v3,
 true,
 65
 )
+receiver.spursensorRegisterEvents()
 lcd20x4.initLCD(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4))
 lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 0, 0, 19, lcd20x4.lcd20x4_text("Maker Kit Car"))
 basic.forever(function () {
