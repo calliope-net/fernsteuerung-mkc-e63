@@ -12,13 +12,28 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     kreis_Knopf_A = !(kreis_Knopf_A)
 })
 receiver.onSpurEvent(function (links_hell, rechts_hell) {
-    receiver.selectMotorStop(true)
     lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 1, 0, 5, links_hell)
     lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 1, 6, 11, rechts_hell)
+    if (spur_Knopf_B) {
+        receiver.eventSpurfolger(
+        links_hell,
+        rechts_hell,
+        false,
+        192,
+        160,
+        31,
+        spur_Wiederholung
+        )
+        spur_Wiederholung = true
+    } else if (spur_Wiederholung) {
+        spur_Knopf_B = false
+        spur_Wiederholung = false
+        receiver.selectMotorStop(true)
+    }
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
-    dauerhaft_Knopf_B = !(dauerhaft_Knopf_B)
+    spur_Knopf_B = !(spur_Knopf_B)
 })
 input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonBhold()
@@ -43,9 +58,11 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
 })
-let bWiederholung = false
+let dauerhaft_Wiederholung = false
 let dauerhaft_Spurfolger = false
 let dauerhaft_Knopf_B = false
+let spur_Wiederholung = false
+let spur_Knopf_B = false
 let kreis_Knopf_A = false
 receiver.beimStart(
 receiver.eHardware.v3,
@@ -63,14 +80,14 @@ basic.forever(function () {
         192,
         160,
         31,
-        bWiederholung,
+        dauerhaft_Wiederholung,
         true,
         20
         )
-        bWiederholung = true
-    } else if (bWiederholung) {
+        dauerhaft_Wiederholung = true
+    } else if (dauerhaft_Wiederholung) {
         dauerhaft_Knopf_B = false
-        bWiederholung = false
+        dauerhaft_Wiederholung = false
         receiver.selectMotorStop(true)
     }
 })
