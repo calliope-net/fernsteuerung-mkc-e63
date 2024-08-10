@@ -58,7 +58,7 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     receiver.fahreJoystick(btf.btf_receivedBuffer19())
     receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
     receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
-    receiver.setLedColors(receiver.eRGBled.a, 0x0000ff, true, true, 20)
+    receiver.setLedColors(receiver.eRGBled.a, 0x0000ff, true, btf.isBetriebsart(receivedData, btf.e0Betriebsart.p0Fahren))
     btf.zeige5x5Buffer(receivedData)
     btf.zeige5x5Joystick(receivedData)
     receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
