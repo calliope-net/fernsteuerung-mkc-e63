@@ -38,6 +38,10 @@ input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
         i = 0
         receiver.pinServoGeradeaus()
         receiver.selectMotor(192)
+        btf.zeigeBIN(receiver.selectMotorSpeed(), btf.ePlot.map, 3)
+        btf.zeigeBIN(receiver.pinServoWinkel(), btf.ePlot.bin, 4)
+    } else {
+        receiver.selectMotorStop(true)
     }
 })
 input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
@@ -69,10 +73,8 @@ receiver.onSpurStopEvent(function (links_hell, rechts_hell, abstand_Stop) {
         i += 1
         if (i > imax) {
             imax = i
-            lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 1, 15, 16, imax)
+            btf.zeigeBIN(i, btf.ePlot.bin, 2)
         }
-        lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 1, 0, 5, links_hell)
-        lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 1, 6, 11, rechts_hell)
         receiver.eventSpurfolger(
         links_hell,
         rechts_hell,
@@ -83,6 +85,8 @@ receiver.onSpurStopEvent(function (links_hell, rechts_hell, abstand_Stop) {
         spur_Wiederholung
         )
         spur_Wiederholung = true
+        receiver.setLedColors(receiver.eRGBled.b, 0xffffff, links_hell)
+        receiver.setLedColors(receiver.eRGBled.c, 0xffffff, rechts_hell)
         i += -1
     } else if (spur_Wiederholung) {
         spur_Knopf_B = false
