@@ -62,6 +62,8 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, receiver.getQwiicUltrasonic(false))
 })
 receiver.onSpurStopEvent(function (links_hell, rechts_hell, abstand_Stop) {
+    btf.comment(btf.btf_text("Ereignis wird ausgelöst, wenn beim Start registriert"))
+    btf.reset_timer()
     btf.comment(btf.btf_text("nur lokal Knopf B Spurfolger ereignisgesteuert ohne Abstandssensor"))
     if (spur_Knopf_B) {
         i += 1
@@ -114,7 +116,7 @@ basic.forever(function () {
     btf.comment(btf.btf_text("dauerhaft_Knopf_B_deaktiviert -> spur_Knopf_B ereignisgesteuert"))
 })
 loops.everyInterval(700, function () {
-    if (btf.timeout(60000, true) && !(dauerhaft_Spurfolger)) {
+    if (btf.timeout(60000, true)) {
         receiver.pinRelay(false)
     } else if (btf.timeout(1000)) {
         receiver.setLedColors(receiver.eRGBled.a, 0xff0000, true, true, 20)
