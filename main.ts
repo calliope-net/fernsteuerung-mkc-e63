@@ -8,7 +8,7 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     } else {
         receiver.fahreStrecke(220, 29, 153)
     }
-    receiver.pinServo16(16)
+    receiver.pinServoGeradeaus()
     kreis_Knopf_A = !(kreis_Knopf_A)
 })
 receiver.onSpurEvent(function (links_hell, rechts_hell) {
@@ -34,6 +34,10 @@ receiver.onSpurEvent(function (links_hell, rechts_hell) {
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
     spur_Knopf_B = !(spur_Knopf_B)
+    if (spur_Knopf_B) {
+        receiver.pinServoGeradeaus()
+        receiver.selectMotor(192)
+    }
 })
 input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonBhold()
