@@ -115,6 +115,7 @@ receiver.onStopEvent(function (abstand_Stop, cm) {
             receiver.selectMotor(64)
             receiver.pinServo16(randint(1, 31))
         } else {
+            basic.pause(1000)
             fahreAbstand(255)
         }
     }
@@ -145,6 +146,9 @@ basic.forever(function () {
     btf.comment(btf.btf_text("10 Fernstart Spurfolger in Schleife, Spur-Variablen werden in Pin-Ereignissen geändert"))
     receiver.dauerhaft_SpurfolgerBuffer(dauerhaft_Spurfolger, btf.btf_receivedBuffer19())
     if (abstand_Knopf_A) {
+        if (!(receiver.selectAbstandSensorConnected())) {
+            control.reset()
+        }
         receiver.raiseAbstandEvent(30, randint(60, 120), 25)
     }
     btf.comment(btf.btf_text("dauerhaft_Knopf_B_deaktiviert -> spur_Knopf_B ereignisgesteuert"))
