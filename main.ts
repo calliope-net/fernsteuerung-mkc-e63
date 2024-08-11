@@ -112,7 +112,7 @@ receiver.onStopEvent(function (abstand_Stop, cm) {
         lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, cm)
         if (abstand_Stop) {
             btf.reset_timer()
-            receiver.fahreStreckePicker(-50, 148, 40)
+            receiver.fahreStrecke(64, randint(1, 31), randint(10, 50))
         }
         fahreAbstand(255)
     }
@@ -142,11 +142,13 @@ lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 0, 0, 19, lcd20
 basic.forever(function () {
     btf.comment(btf.btf_text("10 Fernstart Spurfolger in Schleife, Spur-Variablen werden in Pin-Ereignissen geändert"))
     receiver.dauerhaft_SpurfolgerBuffer(dauerhaft_Spurfolger, btf.btf_receivedBuffer19())
-    receiver.raiseAbstandEvent(30, 35, 25)
+    if (abstand_Knopf_A) {
+        receiver.raiseAbstandEvent(30, 35, 25)
+    }
     btf.comment(btf.btf_text("dauerhaft_Knopf_B_deaktiviert -> spur_Knopf_B ereignisgesteuert"))
 })
 loops.everyInterval(700, function () {
-    if (btf.timeout(60000, true)) {
+    if (btf.timeout(30000, true)) {
         receiver.pinRelay(false)
     } else if (btf.timeout(1000)) {
         receiver.setLedColors(receiver.eRGBled.a, 0xff0000, true, true, 20)
