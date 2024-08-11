@@ -112,7 +112,7 @@ receiver.onStopEvent(function (abstand_Stop, cm) {
         btf.reset_timer()
         lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, cm)
         if (abstand_Stop) {
-            btf.comment(btf.btf_text("immer rückwärts fahren, Richtung Zufall"))
+            btf.comment(btf.btf_text("immer rückwärts fahren, Richtung und Winkel Zufall"))
             receiver.selectMotor(64)
             if (Math.randomBoolean()) {
                 receiver.pinServo16(randint(1, 9))
@@ -120,7 +120,7 @@ receiver.onStopEvent(function (abstand_Stop, cm) {
                 receiver.pinServo16(randint(23, 31))
             }
         } else {
-            btf.comment(btf.btf_text("größer Start Abstand + 1 Sekunde"))
+            btf.comment(btf.btf_text("größer als Start Abstand + 1 Sekunde weiter fahren, dann wieder gerade vorwärts"))
             basic.pause(1000)
             fahreAbstand(255)
         }
