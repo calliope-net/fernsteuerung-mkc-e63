@@ -111,10 +111,12 @@ receiver.onStopEvent(function (abstand_Stop, cm) {
     if (abstand_Knopf_A) {
         lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, cm)
         if (abstand_Stop) {
+            receiver.selectMotorStop(false)
             btf.reset_timer()
             receiver.fahreStrecke(64, randint(1, 31), randint(10, 50))
+        } else {
+            fahreAbstand(255)
         }
-        fahreAbstand(255)
     }
 })
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
