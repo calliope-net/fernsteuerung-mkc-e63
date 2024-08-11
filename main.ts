@@ -58,13 +58,13 @@ receiver.onSpurEvent(function (links_hell, rechts_hell) {
 })
 input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
-    if (kreis_Knopf_A) {
+    if (kreis_Knopf_AB) {
         receiver.fahreStrecke(220, 3, 150)
     } else {
         receiver.fahreStrecke(220, 29, 150)
     }
     receiver.pinServoGeradeaus()
-    kreis_Knopf_A = !(kreis_Knopf_A)
+    kreis_Knopf_AB = !(kreis_Knopf_AB)
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
@@ -130,7 +130,7 @@ input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function (
     btf.buttonAhold()
 })
 let dauerhaft_Spurfolger = false
-let kreis_Knopf_A = false
+let kreis_Knopf_AB = false
 let imax = 0
 let i = 0
 let spur_Wiederholung = false
