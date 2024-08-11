@@ -20,52 +20,14 @@ function dauerhaft_Knopf_B_deaktiviert () {
 }
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
-    if (kreis_Knopf_A) {
-        receiver.fahreStrecke(220, 3, 153)
-    } else {
-        receiver.fahreStrecke(220, 29, 153)
-    }
-    receiver.pinServoGeradeaus()
-    kreis_Knopf_A = !(kreis_Knopf_A)
-})
-input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
-    receiver.pinRelay(false)
-})
-input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
-    btf.set_timeoutDisbled(true)
-    spur_Knopf_B = !(spur_Knopf_B)
-    if (spur_Knopf_B) {
-        i = 0
-        receiver.pinServoGeradeaus()
-        receiver.selectMotor(192)
-        btf.zeigeBIN(receiver.selectMotorSpeed(), btf.ePlot.map, 3)
-        btf.zeigeBIN(receiver.pinServoWinkel(), btf.ePlot.bin, 4)
+    abstand_Knopf_A = !(abstand_Knopf_A)
+    if (abstand_Knopf_A) {
+        fahreAbstand(192)
     } else {
         receiver.selectMotorStop(true)
     }
 })
-input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
-    btf.buttonBhold()
-})
-btf.onReceivedDataChanged(function (receivedData, changed) {
-    if (changed) {
-        receiver.selectMotorStop(true)
-        receiver.setLedColorsOff()
-    }
-    spur_Knopf_B = false
-    dauerhaft_Knopf_B = false
-    dauerhaft_Spurfolger = cb2.set_dauerhaft_Spurfolger(btf.btf_receivedBuffer19(), btf.e3aktiviert.mc)
-    receiver.fahreJoystick(btf.btf_receivedBuffer19())
-    receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
-    receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
-    receiver.setLedColors(receiver.eRGBled.a, 0x0000ff, true, btf.isBetriebsart(receivedData, btf.e0Betriebsart.p0Fahren))
-    btf.zeige5x5Buffer(receivedData)
-    btf.zeige5x5Joystick(receivedData)
-    receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
-    lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 2, 0, 7, btf.getAbstand(receivedData))
-    lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, receiver.getQwiicUltrasonic(false))
-})
-receiver.onSpurStopEvent(function (links_hell, rechts_hell, abstand_Stop) {
+receiver.onSpurEvent(function (links_hell, rechts_hell) {
     btf.comment(btf.btf_text("Ereignis wird ausgelöst, wenn beim Start registriert"))
     btf.reset_timer()
     btf.comment(btf.btf_text("nur lokal Knopf B Spurfolger ereignisgesteuert ohne Abstandssensor"))
@@ -94,29 +56,93 @@ receiver.onSpurStopEvent(function (links_hell, rechts_hell, abstand_Stop) {
         receiver.selectMotorStop(true)
     }
 })
+input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
+    btf.set_timeoutDisbled(true)
+    if (kreis_Knopf_A) {
+        receiver.fahreStrecke(220, 3, 150)
+    } else {
+        receiver.fahreStrecke(220, 29, 150)
+    }
+    receiver.pinServoGeradeaus()
+    kreis_Knopf_A = !(kreis_Knopf_A)
+})
+input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
+    btf.set_timeoutDisbled(true)
+    spur_Knopf_B = !(spur_Knopf_B)
+    if (spur_Knopf_B) {
+        i = 0
+        receiver.pinServoGeradeaus()
+        receiver.selectMotor(192)
+        btf.zeigeBIN(receiver.selectMotorSpeed(), btf.ePlot.map, 3)
+        btf.zeigeBIN(receiver.pinServoWinkel(), btf.ePlot.bin, 4)
+    } else {
+        receiver.selectMotorStop(true)
+    }
+})
+function fahreAbstand (speed: number) {
+    receiver.pinServoGeradeaus()
+    receiver.selectMotor(speed)
+    btf.zeigeBIN(receiver.selectMotorSpeed(), btf.ePlot.map, 3)
+    btf.zeigeBIN(receiver.pinServoWinkel(), btf.ePlot.bin, 4)
+}
+input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
+    btf.buttonBhold()
+})
+btf.onReceivedDataChanged(function (receivedData, changed) {
+    if (changed) {
+        receiver.selectMotorStop(true)
+        receiver.setLedColorsOff()
+    }
+    abstand_Knopf_A = false
+    spur_Knopf_B = false
+    dauerhaft_Knopf_B = false
+    dauerhaft_Spurfolger = cb2.set_dauerhaft_Spurfolger(btf.btf_receivedBuffer19(), btf.e3aktiviert.mc)
+    receiver.fahreJoystick(btf.btf_receivedBuffer19())
+    receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
+    receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
+    receiver.setLedColors(receiver.eRGBled.a, 0x0000ff, true, btf.isBetriebsart(receivedData, btf.e0Betriebsart.p0Fahren))
+    btf.zeige5x5Buffer(receivedData)
+    btf.zeige5x5Joystick(receivedData)
+    receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
+    lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 2, 0, 7, btf.getAbstand(receivedData))
+    lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, receiver.selectAbstand(false))
+})
+receiver.onStopEvent(function (abstand_Stop, cm) {
+    if (abstand_Knopf_A) {
+        lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, cm)
+        if (abstand_Stop) {
+            btf.reset_timer()
+            receiver.fahreStreckePicker(-50, 148, 40)
+        }
+        fahreAbstand(255)
+    }
+})
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
 })
-let imax = 0
-let spur_Wiederholung = false
 let dauerhaft_Spurfolger = false
-let i = 0
-let spur_Knopf_B = false
 let kreis_Knopf_A = false
+let imax = 0
+let i = 0
+let spur_Wiederholung = false
+let spur_Knopf_B = false
 let dauerhaft_Wiederholung = false
 let dauerhaft_Knopf_B = false
+let abstand_Knopf_A = false
 receiver.beimStart(
 receiver.eHardware.v3,
 95,
 true,
 65
 )
+abstand_Knopf_A = false
 receiver.spursensorRegisterEvents()
 lcd20x4.initLCD(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4))
 lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 0, 0, 19, lcd20x4.lcd20x4_text("Maker Kit Car"))
 basic.forever(function () {
     btf.comment(btf.btf_text("10 Fernstart Spurfolger in Schleife, Spur-Variablen werden in Pin-Ereignissen geändert"))
     receiver.dauerhaft_SpurfolgerBuffer(dauerhaft_Spurfolger, btf.btf_receivedBuffer19())
+    receiver.raiseAbstandEvent(20, 20, 25)
     btf.comment(btf.btf_text("dauerhaft_Knopf_B_deaktiviert -> spur_Knopf_B ereignisgesteuert"))
 })
 loops.everyInterval(700, function () {
