@@ -96,7 +96,7 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     abstand_Knopf_A = false
     spur_Knopf_B = false
     dauerhaft_Knopf_B = false
-    dauerhaft_Spurfolger = cb2.set_dauerhaft_Spurfolger(btf.btf_receivedBuffer19(), btf.e3aktiviert.mc)
+    dauerhaft_Spurfolger = receiver.set_dauerhaft_Spurfolger(btf.btf_receivedBuffer19(), btf.e3aktiviert.mc)
     receiver.fahreJoystick(btf.btf_receivedBuffer19())
     receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
     receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
