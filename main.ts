@@ -2,24 +2,17 @@ input.onButtonEvent(Button.AB, btf.buttonEventValue(ButtonEvent.Hold), function 
     receiver.buttonABhold()
 })
 receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
-    btf.comment(btf.btf_text("Ereignis wird ausgelöst, wenn beim Start registriert"))
-    btf.reset_timer()
-    btf.comment(btf.btf_text("nur lokal Knopf B Spurfolger ereignisgesteuert ohne Abstandssensor"))
-    if (Spur_Sensor_Knopf_B) {
-        i += 1
-        if (i > imax) {
-            imax = i
-            btf.zeigeBIN(i, btf.ePlot.bin, 2)
-        }
-        spur_Wiederholung = true
-        receiver.setLedColors(receiver.eRGBled.b, 0xffffff, links_hell)
-        receiver.setLedColors(receiver.eRGBled.c, 0xffffff, rechts_hell)
-        i += -1
-    } else if (spur_Wiederholung) {
-        Spur_Sensor_Knopf_B = false
-        spur_Wiederholung = false
-        receiver.selectMotorStop(true)
-    }
+    receiver.buffer_Spur_folgen(btf.btf_receivedBuffer19(), links_hell, rechts_hell, abstand_Stop)
+    receiver.event_Spur_folgen(
+    Spur_Sensor_Knopf_B,
+    links_hell,
+    rechts_hell,
+    192,
+    160,
+    31,
+    abstand_Stop,
+    cb2.cb2_zehntelsekunden(btf.ePause.s1)
+    )
 })
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     Ultraschall_Sensor_Knopf_A = !(Ultraschall_Sensor_Knopf_A)
@@ -38,29 +31,21 @@ input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     Spur_Sensor_Knopf_B = !(Spur_Sensor_Knopf_B)
     Ultraschall_Sensor_Knopf_A = Spur_Sensor_Knopf_B
 })
-function fahreAbstand (speed: number) {
-    receiver.pinServoGeradeaus()
-    receiver.selectMotor(speed)
-    btf.zeigeBIN(receiver.selectMotorSpeed(), btf.ePlot.map, 3)
-    btf.zeigeBIN(receiver.pinServoWinkel(), btf.ePlot.bin, 4)
-}
 receiver.onAbstandEvent(function (abstand_Sensor, abstand_Stop, cm) {
-    if (Ultraschall_Sensor_Knopf_A) {
-        btf.reset_timer()
-        lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, cm)
-        if (abstand_Stop) {
-            btf.comment(btf.btf_text("immer rückwärts fahren, Richtung und Winkel Zufall"))
-            receiver.selectMotor(64)
-            if (Math.randomBoolean()) {
-                receiver.pinServo16(randint(1, 9))
-            } else {
-                receiver.pinServo16(randint(23, 31))
-            }
-        } else {
-            btf.comment(btf.btf_text("größer als Start Abstand + 1 Sekunde weiter fahren, dann wieder gerade vorwärts"))
-            basic.pause(1000)
-            fahreAbstand(255)
-        }
+    receiver.buffer_Hindernis_ausweichen(btf.btf_receivedBuffer19(), abstand_Stop)
+    receiver.event_Hindernis_ausweichen(
+    Ultraschall_Sensor_Knopf_A && !(Spur_Sensor_Knopf_B),
+    abstand_Stop,
+    255,
+    16,
+    64,
+    0,
+    randint(5, 20)
+    )
+    if (abstand_Stop) {
+        receiver.setLedColors(receiver.eRGBled.a, 0xff0000)
+    } else {
+        receiver.setLedColors(receiver.eRGBled.a, 0xffff00, abstand_Sensor)
     }
 })
 input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
@@ -87,9 +72,6 @@ input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function (
     btf.buttonAhold()
 })
 let Kreis_Knopf_AB = false
-let imax = 0
-let i = 0
-let spur_Wiederholung = false
 let Spur_Sensor_Knopf_B = false
 let Ultraschall_Sensor_Knopf_A = false
 receiver.beimStart(
