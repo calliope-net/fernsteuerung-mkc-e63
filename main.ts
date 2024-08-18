@@ -18,16 +18,7 @@ function dauerhaft_Knopf_B_deaktiviert () {
         receiver.selectMotorStop(true)
     }
 }
-input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
-    btf.set_timeoutDisbled(true)
-    abstand_Knopf_A = !(abstand_Knopf_A)
-    if (abstand_Knopf_A) {
-        fahreAbstand(192)
-    } else {
-        receiver.selectMotorStop(true)
-    }
-})
-receiver.onSpurEvent(function (links_hell, rechts_hell) {
+receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
     btf.comment(btf.btf_text("Ereignis wird ausgelöst, wenn beim Start registriert"))
     btf.reset_timer()
     btf.comment(btf.btf_text("nur lokal Knopf B Spurfolger ereignisgesteuert ohne Abstandssensor"))
@@ -53,6 +44,15 @@ receiver.onSpurEvent(function (links_hell, rechts_hell) {
     } else if (spur_Wiederholung) {
         spur_Knopf_B = false
         spur_Wiederholung = false
+        receiver.selectMotorStop(true)
+    }
+})
+input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
+    btf.set_timeoutDisbled(true)
+    abstand_Knopf_A = !(abstand_Knopf_A)
+    if (abstand_Knopf_A) {
+        fahreAbstand(192)
+    } else {
         receiver.selectMotorStop(true)
     }
 })
@@ -155,7 +155,7 @@ basic.forever(function () {
         if (!(receiver.selectAbstandSensorConnected())) {
             control.reset()
         }
-        receiver.raiseAbstandEvent(30, randint(60, 120), 25)
+        receiver.raiseAbstandEvent(true, 30, 35, 25)
     }
     btf.comment(btf.btf_text("dauerhaft_Knopf_B_deaktiviert -> spur_Knopf_B ereignisgesteuert"))
 })
