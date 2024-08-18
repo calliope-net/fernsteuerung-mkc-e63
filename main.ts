@@ -87,7 +87,7 @@ receiver.spursensorRegisterEvents()
 lcd20x4.initLCD(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4))
 lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 0, 0, 19, lcd20x4.lcd20x4_text("Maker Kit Car"))
 basic.forever(function () {
-    receiver.raiseBufferEvents(btf.btf_receivedBuffer19())
+    receiver.raiseBufferEvents(btf.btf_receivedBuffer19(), 5, 25)
     receiver.raiseAbstandEvent(Ultraschall_Sensor_Knopf_A, 30, 35)
     receiver.raiseSpurEvent(Spur_Sensor_Knopf_B)
 })
