@@ -16,6 +16,7 @@ receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
 })
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     Ultraschall_Sensor_Knopf_A = !(Ultraschall_Sensor_Knopf_A)
+    btf.set_timeoutDisbled(Ultraschall_Sensor_Knopf_A)
 })
 input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
     btf.set_timeoutDisbled(true)
@@ -30,6 +31,7 @@ input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     Spur_Sensor_Knopf_B = !(Spur_Sensor_Knopf_B)
     Ultraschall_Sensor_Knopf_A = Spur_Sensor_Knopf_B
+    btf.set_timeoutDisbled(Spur_Sensor_Knopf_B)
 })
 receiver.onAbstandEvent(function (abstand_Sensor, abstand_Stop, cm) {
     receiver.buffer_Hindernis_ausweichen(btf.btf_receivedBuffer19(), abstand_Stop)
