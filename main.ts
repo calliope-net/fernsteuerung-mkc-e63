@@ -1,23 +1,6 @@
 input.onButtonEvent(Button.AB, btf.buttonEventValue(ButtonEvent.Hold), function () {
     receiver.buttonABhold()
 })
-function dauerhaft_Knopf_B_deaktiviert () {
-    if (dauerhaft_Knopf_B && !(btf.timeout(30000, true))) {
-        receiver.beispielSpurfolger16(
-        192,
-        160,
-        31,
-        dauerhaft_Wiederholung,
-        true,
-        20
-        )
-        dauerhaft_Wiederholung = true
-    } else if (dauerhaft_Wiederholung) {
-        dauerhaft_Knopf_B = false
-        dauerhaft_Wiederholung = false
-        receiver.selectMotorStop(true)
-    }
-}
 receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
     btf.comment(btf.btf_text("Ereignis wird ausgelöst, wenn beim Start registriert"))
     btf.reset_timer()
@@ -28,15 +11,6 @@ receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
             imax = i
             btf.zeigeBIN(i, btf.ePlot.bin, 2)
         }
-        receiver.eventSpurfolger(
-        links_hell,
-        rechts_hell,
-        false,
-        192,
-        160,
-        31,
-        spur_Wiederholung
-        )
         spur_Wiederholung = true
         receiver.setLedColors(receiver.eRGBled.b, 0xffffff, links_hell)
         receiver.setLedColors(receiver.eRGBled.c, 0xffffff, rechts_hell)
@@ -130,13 +104,12 @@ input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function (
     btf.buttonAhold()
 })
 let dauerhaft_Spurfolger = false
+let dauerhaft_Knopf_B = false
 let kreis_Knopf_AB = false
 let imax = 0
 let i = 0
 let spur_Wiederholung = false
 let spur_Knopf_B = false
-let dauerhaft_Wiederholung = false
-let dauerhaft_Knopf_B = false
 let abstand_Knopf_A = false
 receiver.beimStart(
 receiver.eHardware.v3,
