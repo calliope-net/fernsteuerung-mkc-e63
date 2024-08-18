@@ -45,9 +45,9 @@ receiver.onAbstandEvent(function (abstand_Sensor, abstand_Stop, cm) {
     randint(5, 20)
     )
     if (abstand_Stop) {
-        receiver.setLedColors(receiver.eRGBled.a, 0xff0000)
+        receiver.setLedColors(receiver.eRGBled.b, 0xff0000)
     } else {
-        receiver.setLedColors(receiver.eRGBled.a, 0xffff00, abstand_Sensor)
+        receiver.setLedColors(receiver.eRGBled.b, 0xffff00, abstand_Sensor)
     }
 })
 input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
