@@ -85,6 +85,25 @@ function fahreAbstand (speed: number) {
     btf.zeigeBIN(receiver.selectMotorSpeed(), btf.ePlot.map, 3)
     btf.zeigeBIN(receiver.pinServoWinkel(), btf.ePlot.bin, 4)
 }
+receiver.onAbstandEvent(function (abstand_Sensor, abstand_Stop, cm) {
+    if (abstand_Knopf_A) {
+        btf.reset_timer()
+        lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, cm)
+        if (abstand_Stop) {
+            btf.comment(btf.btf_text("immer rückwärts fahren, Richtung und Winkel Zufall"))
+            receiver.selectMotor(64)
+            if (Math.randomBoolean()) {
+                receiver.pinServo16(randint(1, 9))
+            } else {
+                receiver.pinServo16(randint(23, 31))
+            }
+        } else {
+            btf.comment(btf.btf_text("größer als Start Abstand + 1 Sekunde weiter fahren, dann wieder gerade vorwärts"))
+            basic.pause(1000)
+            fahreAbstand(255)
+        }
+    }
+})
 input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonBhold()
 })
@@ -106,25 +125,6 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
     lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 2, 0, 7, btf.getAbstand(receivedData))
     lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, receiver.selectAbstand(false))
-})
-receiver.onStopEvent(function (abstand_Stop, cm) {
-    if (abstand_Knopf_A) {
-        btf.reset_timer()
-        lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, cm)
-        if (abstand_Stop) {
-            btf.comment(btf.btf_text("immer rückwärts fahren, Richtung und Winkel Zufall"))
-            receiver.selectMotor(64)
-            if (Math.randomBoolean()) {
-                receiver.pinServo16(randint(1, 9))
-            } else {
-                receiver.pinServo16(randint(23, 31))
-            }
-        } else {
-            btf.comment(btf.btf_text("größer als Start Abstand + 1 Sekunde weiter fahren, dann wieder gerade vorwärts"))
-            basic.pause(1000)
-            fahreAbstand(255)
-        }
-    }
 })
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
