@@ -67,9 +67,11 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     btf.zeige5x5Buffer(receivedData)
     btf.zeige5x5Joystick(receivedData)
     receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
-    lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 2, 0, 7, btf.getAbstand(receivedData))
-    lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 3, 0, 7, receiver.selectAbstand(false))
 })
+function Konfiguration () {
+    btf.comment(btf.btf_text("GitHub: calliope-net/fernsteuerung-mkc-e63"))
+    btf.comment(btf.btf_text("Erweiterung: calliope-net/fernsteuerung"))
+}
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
 })
@@ -84,8 +86,6 @@ true,
 )
 Ultraschall_Sensor_Knopf_A = false
 receiver.spursensorRegisterEvents()
-lcd20x4.initLCD(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4))
-lcd20x4.writeText(lcd20x4.lcd20x4_eADDR(lcd20x4.eADDR.LCD_20x4), 0, 0, 19, lcd20x4.lcd20x4_text("Maker Kit Car"))
 basic.forever(function () {
     receiver.raiseBufferEvents(btf.btf_receivedBuffer19(), 5, 25)
     receiver.raiseAbstandEvent(Ultraschall_Sensor_Knopf_A, 30, 35)
