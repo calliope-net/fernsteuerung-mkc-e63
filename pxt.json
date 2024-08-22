@@ -5,7 +5,7 @@
     "dependencies": {
         "core": "*",
         "v3": "*",
-        "fernsteuerung": "github:calliope-net/fernsteuerung#v1.4.12",
+        "fernsteuerung": "github:calliope-net/fernsteuerung#v1.4.15",
         "lcd-20x4": "github:calliope-net/lcd-20x4#v2.0.1"
     },
     "files": [
