@@ -1,6 +1,10 @@
 input.onButtonEvent(Button.AB, btf.buttonEventValue(ButtonEvent.Hold), function () {
     receiver.buttonABhold()
 })
+function zeige4Digit (num: number) {
+    o4digit.point(num < 0)
+    o4digit.show(Math.abs(num))
+}
 receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
     receiver.buffer_Spur_folgen(btf.btf_receivedBuffer19(), links_hell, rechts_hell, abstand_Stop)
     receiver.event_Spur_folgen(
@@ -78,14 +82,15 @@ input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function (
 let Kreis_Knopf_AB = false
 let Spur_Sensor_Knopf_B = false
 let Ultraschall_Sensor_Knopf_A = false
+let o4digit: grove.TM1637 = null
 receiver.beimStart(
 receiver.eHardware.v3,
 95,
 true,
 65
 )
+o4digit = grove.createDisplay(DigitalPin.C16, DigitalPin.C17)
 Ultraschall_Sensor_Knopf_A = false
-receiver.spursensorRegisterEvents()
 basic.forever(function () {
     receiver.raiseBufferEvents(btf.btf_receivedBuffer19(), 5, 25)
     receiver.raiseAbstandEvent(Ultraschall_Sensor_Knopf_A, 30, 35)
@@ -103,4 +108,5 @@ loops.everyInterval(700, function () {
     } else if (btf.timeout(1000, true)) {
         receiver.setLedColors(receiver.eRGBled.a, 0x00ff00)
     }
+    zeige4Digit(receiver.encoderCounter())
 })
