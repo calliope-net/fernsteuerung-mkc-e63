@@ -49,9 +49,9 @@ receiver.onAbstandEvent(function (abstand_Sensor, abstand_Stop, cm) {
     randint(5, 20)
     )
     if (abstand_Stop) {
-        receiver.setLedColors(receiver.eRGBled.b, 0xff0000)
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), 0xff0000)
     } else {
-        receiver.setLedColors(receiver.eRGBled.b, 0xffff00, abstand_Sensor)
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), 0xffff00, abstand_Sensor)
     }
 })
 input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function () {
@@ -60,14 +60,14 @@ input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function (
 btf.onReceivedDataChanged(function (receivedData, changed) {
     if (changed) {
         receiver.selectMotorStop(true)
-        receiver.setLedColorsOff()
+        btf.setLedColorsOff()
     }
     Ultraschall_Sensor_Knopf_A = false
     Spur_Sensor_Knopf_B = false
     receiver.fahreJoystick(btf.btf_receivedBuffer19())
     receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
     receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
-    receiver.setLedColors(receiver.eRGBled.a, 0x0000ff, true, btf.isBetriebsart(receivedData, btf.e0Betriebsart.p0Fahren))
+    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x0000ff, true, btf.isBetriebsart(receivedData, btf.e0Betriebsart.p0Fahren))
     btf.zeige5x5Buffer(receivedData)
     btf.zeige5x5Joystick(receivedData)
     receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
@@ -100,13 +100,13 @@ loops.everyInterval(700, function () {
     if (btf.timeout(30000, true)) {
         receiver.pinRelay(false)
     } else if (btf.timeout(1000)) {
-        receiver.setLedColors(receiver.eRGBled.a, 0xff0000, true, true, 20)
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xff0000, true, true)
         receiver.dualMotor128(receiver.eDualMotor.M0_M1, 128)
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.ab, false)
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.cd, false)
         receiver.ringTone(false)
     } else if (btf.timeout(1000, true)) {
-        receiver.setLedColors(receiver.eRGBled.a, 0x00ff00)
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00)
     }
     zeige4Digit(receiver.encoderCounter())
 })
