@@ -109,5 +109,5 @@ loops.everyInterval(700, function () {
     } else if (btf.timeout(1000, true)) {
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00)
     }
-    o4digit.show(0)
+    o4digit.show(receiver.selectAbstand_cm(false))
 })
