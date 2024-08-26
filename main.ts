@@ -92,7 +92,8 @@ true,
 o4digit = grove.createDisplay(DigitalPin.C16, DigitalPin.C17)
 Ultraschall_Sensor_Knopf_A = false
 basic.forever(function () {
-    receiver.raiseBufferEvents(btf.btf_receivedBuffer19(), 5, 25)
+    receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19(), 5, 25)
+    receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19(), 25)
     receiver.raiseAbstandEvent(Ultraschall_Sensor_Knopf_A, 30, 35)
     receiver.raiseSpurEvent(Spur_Sensor_Knopf_B)
 })
@@ -108,5 +109,5 @@ loops.everyInterval(700, function () {
     } else if (btf.timeout(1000, true)) {
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00)
     }
-    zeige4Digit(receiver.encoderCounter())
+    o4digit.show(0)
 })
