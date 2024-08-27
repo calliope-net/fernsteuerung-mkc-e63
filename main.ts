@@ -60,6 +60,7 @@ input.onButtonEvent(Button.B, btf.buttonEventValue(ButtonEvent.Hold), function (
 btf.onReceivedDataChanged(function (receivedData, changed) {
     if (changed) {
         receiver.selectMotorStop(true)
+        receiver.selectRanging(false)
         btf.setLedColorsOff()
     }
     Ultraschall_Sensor_Knopf_A = false
