@@ -95,7 +95,7 @@ Ultraschall_Sensor_Knopf_A = false
 basic.forever(function () {
     receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19(), 5, 25)
     receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19(), 25)
-    receiver.raiseAbstandEvent(Ultraschall_Sensor_Knopf_A, 30, 35)
+    receiver.raiseAbstandEvent(Ultraschall_Sensor_Knopf_A, 50, 55)
     receiver.raiseSpurEvent(Spur_Sensor_Knopf_B)
 })
 loops.everyInterval(700, function () {
