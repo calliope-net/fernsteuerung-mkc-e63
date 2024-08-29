@@ -8,7 +8,7 @@ function zeige4Digit (num: number) {
 receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
     receiver.buffer_Spur_folgen(btf.btf_receivedBuffer19(), links_hell, rechts_hell, abstand_Stop)
     receiver.event_Spur_folgen(
-    Spur_Sensor_Knopf_B,
+    receiver.isFunktion(receiver.eFunktion.spur_folgen),
     links_hell,
     rechts_hell,
     192,
@@ -19,28 +19,41 @@ receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
     )
 })
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
-    Ultraschall_Sensor_Knopf_A = !(Ultraschall_Sensor_Knopf_A)
-    btf.set_timeoutDisbled(Ultraschall_Sensor_Knopf_A)
+    if (receiver.isFunktion(receiver.eFunktion.ng)) {
+        Stop = 50
+        receiver.setFunktion(receiver.eFunktion.hindernis_ausweichen)
+    } else if (receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen)) {
+        receiver.setFunktion(receiver.eFunktion.ng)
+    } else if (receiver.isFunktion(receiver.eFunktion.spur_folgen)) {
+        Stop = 30
+        Ultraschall_Sensor_Knopf_A = !(Ultraschall_Sensor_Knopf_A)
+    }
 })
 input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
-    btf.set_timeoutDisbled(true)
-    if (Kreis_Knopf_AB) {
-        receiver.fahreStrecke(220, 3, 150)
-    } else {
-        receiver.fahreStrecke(220, 29, 150)
+    if (receiver.isFunktion(receiver.eFunktion.ng) || receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen)) {
+        Ultraschall_Sensor_Knopf_A = receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen)
+        receiver.setFunktion(receiver.eFunktion.fahrplan)
+        if (Kreis_Knopf_AB) {
+            receiver.fahreStrecke(220, 3, 150)
+        } else {
+            receiver.fahreStrecke(220, 29, 150)
+        }
+        receiver.pinServoGeradeaus()
+        Kreis_Knopf_AB = !(Kreis_Knopf_AB)
+        receiver.setFunktion(receiver.eFunktion.ng)
     }
-    receiver.pinServoGeradeaus()
-    Kreis_Knopf_AB = !(Kreis_Knopf_AB)
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
-    Spur_Sensor_Knopf_B = !(Spur_Sensor_Knopf_B)
-    Ultraschall_Sensor_Knopf_A = Spur_Sensor_Knopf_B
-    btf.set_timeoutDisbled(Spur_Sensor_Knopf_B)
+    if (receiver.isFunktion(receiver.eFunktion.ng)) {
+        receiver.setFunktion(receiver.eFunktion.spur_folgen)
+    } else if (receiver.isFunktion(receiver.eFunktion.spur_folgen)) {
+        receiver.setFunktion(receiver.eFunktion.ng)
+    }
 })
 receiver.onAbstandEvent(function (abstand_Sensor, abstand_Stop, cm) {
     receiver.buffer_Hindernis_ausweichen(btf.btf_receivedBuffer19(), abstand_Stop)
     receiver.event_Hindernis_ausweichen(
-    Ultraschall_Sensor_Knopf_A && !(Spur_Sensor_Knopf_B),
+    receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen),
     abstand_Stop,
     255,
     16,
@@ -63,8 +76,8 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
         receiver.selectRanging(false)
         btf.setLedColorsOff()
     }
+    receiver.setFunktion(receiver.eFunktion.ng)
     Ultraschall_Sensor_Knopf_A = false
-    Spur_Sensor_Knopf_B = false
     receiver.fahreJoystick(btf.btf_receivedBuffer19())
     receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
     receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
@@ -81,7 +94,7 @@ input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function (
     btf.buttonAhold()
 })
 let Kreis_Knopf_AB = false
-let Spur_Sensor_Knopf_B = false
+let Stop = 0
 let Ultraschall_Sensor_Knopf_A = false
 let o4digit: grove.TM1637 = null
 receiver.beimStart(
@@ -93,10 +106,10 @@ true,
 o4digit = grove.createDisplay(DigitalPin.C16, DigitalPin.C17)
 Ultraschall_Sensor_Knopf_A = false
 basic.forever(function () {
-    receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19(), 5, 25)
-    receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19(), 25)
-    receiver.raiseAbstandEvent(Ultraschall_Sensor_Knopf_A, 50, 55)
-    receiver.raiseSpurEvent(Spur_Sensor_Knopf_B)
+    receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19())
+    receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19())
+    receiver.raiseAbstandEvent(receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen) || Ultraschall_Sensor_Knopf_A, Stop, Stop + 5)
+    receiver.raiseSpurEvent(receiver.isFunktion(receiver.eFunktion.spur_folgen))
 })
 loops.everyInterval(700, function () {
     if (btf.timeout(30000, true)) {
