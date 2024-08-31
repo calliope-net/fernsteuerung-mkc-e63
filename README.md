@@ -3,16 +3,21 @@
 
 ![](png/DSC00309_800.JPG)
 
-### Hardware
+#### Hardware: Modell
 
 * **[Maker Kit Car](https://www.fischertechnik.de/de-de/maker#maker-kit-car)** | [digitale Bauanleitung](https://apps.fischer.de/ecom/fischertechnik/digitale-bauanleitungen/maker-kit-car.htm)
 * **[Calliope mini 3](https://calliope.cc/calliope-mini/calliope-mini-3)** | [Leiterplatte für Calliope mini 3 Pinleiste](https://forum.calliope.cc/t/mit-angesteckter-leiterplatte-wird-calliope-v3-zum-controller-fuer-fischertechnik-modelle/2913)
-  * optional [Qwiic Ultrasonic Distance Sensor](https://learn.sparkfun.com/tutorials/qwiic-ultrasonic-distance-sensor-hc-sr04-hookup-guide)
-  * optional [IR-Spursensor](https://www.fischertechnik.de/de-de/produkte/einzelteile/sensoren/128598-ir-spursensor-schwarz)
-  * MakeCode Projekt: **[calliope-net/fernsteuerung-mkc-e63](https://calliope-net.github.io/fernsteuerung-mkc-e63/)**
-* Fernbedienung: **Calliope mini** v1 oder v2
-  * optional [SparkFun Qwiic Joystick](https://learn.sparkfun.com/tutorials/qwiic-joystick-hookup-guide)
-  * MakeCode Projekt: **[calliope-net/fernsteuerung-s61](https://calliope-net.github.io/fernsteuerung-s61/)**
+* optional [Qwiic Ultrasonic Distance Sensor](https://learn.sparkfun.com/tutorials/qwiic-ultrasonic-distance-sensor-hc-sr04-hookup-guide)
+* optional [IR-Spursensor](https://www.fischertechnik.de/de-de/produkte/einzelteile/sensoren/128598-ir-spursensor-schwarz)
+
+MakeCode Projekt: **[calliope-net/fernsteuerung-mkc-e63](https://calliope-net.github.io/fernsteuerung-mkc-e63/)**
+
+#### Hardware: Fernbedienung
+
+* **Calliope mini** v1 v2 v3
+* optional [SparkFun Qwiic Joystick](https://learn.sparkfun.com/tutorials/qwiic-joystick-hookup-guide)
+
+MakeCode Projekt: **[calliope-net/fernsteuerung-s61](https://calliope-net.github.io/fernsteuerung-s61/)**
 
 ### Bedienung Maker Kit Car (ohne Fernsteuerung)
 
