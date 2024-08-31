@@ -34,12 +34,12 @@ MakeCode Projekt: **[calliope-net/fernsteuerung-s61](https://calliope-net.github
   * Servo Korrektur beenden mit Reset, neuer Wert muss angezeigt werden
 * **A geklickt**
   * schaltet *Hindernis ausweichen* an und aus (Ultraschall Sensor)
-  * Calli:bot fährt geradeaus und lenkt vor einem Hindernis rückwärts
+  * Modell fährt geradeaus und lenkt vor einem Hindernis rückwärts
 * **B geklickt**
   * schaltet *Spur folgen* an und aus (2 Spur Sensoren)
   * fährt bis zu einer schwarzen Linie (etwa 2 cm breit) dann auf der Linie
   * mit A kann Ultraschall Sensor dazu geschaltet werden (gelbe LED)
-  * hält dann auf der Line bei Hindernis an (wenn mehrere Calli:bot fahren)
+  * hält dann auf der Line bei Hindernis an (wenn mehrere Modelle fahren)
 * **A+B geklickt**
   * fährt 6 Strecken (mit Encoder zentimetergenau)
   * wenn A und B aus war: Ultraschall Sensor nicht aktiv
@@ -61,18 +61,18 @@ MakeCode Projekt: **[calliope-net/fernsteuerung-s61](https://calliope-net.github
 * **Timeout**
   * rot blinken: nach 30 Sekunden *zurücksetzen*
   * grün: nach 30 Sekunden ohne Sensor-Ereignis *zurücksetzen*
-  * blau blinken: kein Timeout (Calli:bot ist ferngesteuert)
-  * aus schalten per Software wird beim Calli:bot nicht unterstützt
+  * blau blinken: kein Timeout (Modell ist ferngesteuert)
+  * Modelle mit Relais werden beim *zurücksetzen* aus geschaltet
   * *zurücksetzen* kann auch von der Fernbedienung gesendet werden
 
-> Timeout sorgt dafür, dass Calli:bot stehen bleibt wenn beim fernsteuern die Bluetooth Verbindung unterbrochen ist
-> oder wenn er beim alleine fahren stecken bleibt.
+> Timeout sorgt dafür, dass das Modell stehen bleibt, wenn beim fernsteuern die Bluetooth Verbindung unterbrochen ist
+> oder das Modell beim alleine fahren stecken bleibt.
 
 ### Bedienung Maker Kit Car (mit Fernsteuerung)
 
 > Bei Sender und Empfänger muss die selbe Funkgruppe eingestellt sein.
 
-Das Ändern der Funkgruppe funktioniert beim Calli:bot und der Fernbedienung gleich. **Knopf A** oder **Knopf B** muss so lange gedrückt werden, 
+Das Ändern der Funkgruppe funktioniert beim Modell und der Fernbedienung gleich. **Knopf A** oder **Knopf B** muss so lange gedrückt werden, 
 bis sich die Anzeige ändert (etwa 4 Sekunden). Ändern der Funkgruppe ist in jedem Zustand möglich.
 
 * **Funkgruppe 1-8** ist die Anzahl der roten LED in den 2 linken Spalten im Display
@@ -112,7 +112,7 @@ In der Betriebsart *Fahren und Lenken* ist immer eine Fernbedienung mit Joystick
   * **B geklickt** schaltet Spur Sensor an und aus (weiße LED rechts)
     * bleibt auf einer schwarzen Linie stehen; aus schalten mit **B geklickt**
     * hier kann aber auch auf die Funktion *Spur folgen* umgeschaltet werden
-  * **auf den Joystick drücken** hupen (nur wenn Hupe an Calli:Bot angebaut ist)
+  * **auf den Joystick drücken** hupen
 
 #### Programm fernstarten - eine Fernbedienung - mehrere (verschiedene) Modelle
 
@@ -124,24 +124,24 @@ Es ist sinnvoll das Modell vorher mit *Fahren und Lenken* an die Position zu fah
 
 In der Betriebsart *Programm fernstarten* wird der Joystick nicht benutzt. 
 
-Die Programme *Hindernis ausweichen* oder *Spur folgen* werden mit der Fernbedienung auf dem verbundenen Calli:bot gestartet und laufen dann dauerhaft weiter,
+Die Programme *Hindernis ausweichen* oder *Spur folgen* werden mit der Fernbedienung auf dem verbundenen Modell gestartet und laufen dann dauerhaft weiter,
 bis sie wieder mit der Fernbedienung beendet werden.
 
 Die Fernbedienung kann die Funkgruppe ändern und den nächsten Call:bot (oder ein anderes Modell) fernsteuern.
 Währenddessen fahren die gestarteten Modelle allein weiter (RGB-LED grün). Die Funkgruppe kann jederzeit auf ein Modell zurück geschaltet werden.
 Den Zustand jedes Modells hat sich die Fernbedienung gemerkt, so dass dieses weiter fährt, blau blinkt und mit den Tasten gesteuert werden kann.
 
-> Um ein stecken gebliebenes Modell mit dem Joystick zu fahren, kann jederzeit auf *Fahren und Lenken* umgeschaltet werden. Mehrere Modelle,
-> nicht nur Calli:bot, können - ohne sie anzufassen - mit einer einzigen Fernbedinung gesteuert werden.
+> Um ein stecken gebliebenes Modell mit dem Joystick zu fahren, kann jederzeit auf *Fahren und Lenken* umgeschaltet werden. Mehrere Modelle
+> können - ohne sie anzufassen - mit einer einzigen Fernbedinung gesteuert werden.
 
 * nur wenn B aus ist: **A geklickt**
   * schaltet Programm *Hindernis ausweichen* an und aus (Ultraschall Sensor)
-  * Calli:bot fährt geradeaus und lenkt vor einem Hindernis rückwärts
+  * Modell fährt geradeaus und lenkt vor einem Hindernis rückwärts
 * nur wenn A aus ist: **B geklickt**
   * schaltet Programm *Spur folgen* an und aus (2 Spur Sensoren)
   * fährt bis zu einer schwarzen Linie (etwa 2 cm breit) dann auf der Linie
   * mit **A geklickt** kann Ultraschall Sensor dazu geschaltet werden (gelbe LED)
-  * hält dann auf der Line bei Hindernis an (wenn mehrere Calli:bot fahren)
+  * hält dann auf der Line bei Hindernis an (wenn mehrere Modelle fahren)
 
 #### Strecken senden - 5 Teilstrecken: (Fahren, Lenken, Länge)
 
@@ -180,7 +180,7 @@ Ohne Encoder hängt die Länge einer Strecke u.a. von der Batterie Spannung ab u
 
 #### Reset zum Modell senden
 
-* **A+B halten** sendet Reset zum Calli:bot und seinem Calliope
+* **A+B halten** sendet Reset zum Modell und seinem Calliope
   * die Fernbedienung ist wieder bei der Auswahl des Modells (Bilder)
 
 
