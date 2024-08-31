@@ -25,6 +25,13 @@ MakeCode Projekt: **[calliope-net/fernsteuerung-s61](https://calliope-net.github
 
 ![](png/f1s95.png)
 
+* Servo Korrektur
+  * Winkel am Servo Pin, bei dem das Modell geradeaus fährt
+  * im Bild rechts wird die Binärzahl 95 (°) angezeigt
+  * um den Winkel zu ändern **A+B halten**
+  * danach mit **A halten** oder **B halten** den Wert ändern
+  * wird im Flash gespeichert und beim Einschalten wieder hergestellt
+
 * nur wenn B aus ist: **A geklickt**
   * schaltet *Hindernis ausweichen* an und aus (Ultraschall Sensor)
   * Calli:bot fährt geradeaus und lenkt vor einem Hindernis rückwärts
