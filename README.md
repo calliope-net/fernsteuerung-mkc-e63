@@ -5,8 +5,8 @@
 
 #### Hardware: Modell
 
-* **[Maker Kit Car](https://www.fischertechnik.de/de-de/maker#maker-kit-car)** | [digitale Bauanleitung](https://apps.fischer.de/ecom/fischertechnik/digitale-bauanleitungen/maker-kit-car.htm)
-* **[Calliope mini 3](https://calliope.cc/calliope-mini/calliope-mini-3)** | [Leiterplatte für Calliope mini 3 Pinleiste](https://forum.calliope.cc/t/mit-angesteckter-leiterplatte-wird-calliope-v3-zum-controller-fuer-fischertechnik-modelle/2913)
+* **[Maker Kit Car](https://www.fischertechnik.de/de-de/maker#maker-kit-car)** \| [digitale Bauanleitung](https://apps.fischer.de/ecom/fischertechnik/digitale-bauanleitungen/maker-kit-car.htm)
+* **[Calliope mini 3](https://calliope.cc/calliope-mini/calliope-mini-3)** \| [Leiterplatte für Calliope mini 3 Pinleiste](https://forum.calliope.cc/t/mit-angesteckter-leiterplatte-wird-calliope-v3-zum-controller-fuer-fischertechnik-modelle/2913)
 * optional [Qwiic Ultrasonic Distance Sensor](https://learn.sparkfun.com/tutorials/qwiic-ultrasonic-distance-sensor-hc-sr04-hookup-guide)
 * optional [IR-Spursensor](https://www.fischertechnik.de/de-de/produkte/einzelteile/sensoren/128598-ir-spursensor-schwarz)
 
