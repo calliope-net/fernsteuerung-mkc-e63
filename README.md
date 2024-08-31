@@ -32,11 +32,10 @@ MakeCode Projekt: **[calliope-net/fernsteuerung-s61](https://calliope-net.github
   * danach mit **A halten** oder **B halten** den Wert ändern
   * wird im Flash gespeichert und beim Einschalten wieder hergestellt
   * Servo Korrektur beenden mit Reset, neuer Wert muss angezeigt werden
-
-* nur wenn B aus ist: **A geklickt**
+* **A geklickt**
   * schaltet *Hindernis ausweichen* an und aus (Ultraschall Sensor)
   * Calli:bot fährt geradeaus und lenkt vor einem Hindernis rückwärts
-* nur wenn A aus ist: **B geklickt**
+* **B geklickt**
   * schaltet *Spur folgen* an und aus (2 Spur Sensoren)
   * fährt bis zu einer schwarzen Linie (etwa 2 cm breit) dann auf der Linie
   * mit A kann Ultraschall Sensor dazu geschaltet werden (gelbe LED)
