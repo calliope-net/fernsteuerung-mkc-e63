@@ -21,11 +21,9 @@ MakeCode Projekt: **[calliope-net/fernsteuerung-s61](https://calliope-net.github
 
 ### Bedienung Maker Kit Car (ohne Fernsteuerung)
 
-* nach dem Einschalten wird die Funkgruppe, Typ und Batterie Spannung angezeigt
-* Beispiel 1: Funkgruppe 1; Typ 4 (Calli:bot 2 ohne Encoder); 3,8 Volt
-* Beispiel 2: Funkgruppe 3; Typ 3 (Calli:bot 2 E mit Encoder); 4,5 Volt
+* nach dem Einschalten wird die Funkgruppe und Servo Korrektur angezeigt
 
-![](png/f1_cb2a_v38.png) ![](png/f3_cb2e_v45.png)
+![](png/f1s95.png)
 
 * nur wenn B aus ist: **A geklickt**
   * schaltet *Hindernis ausweichen* an und aus (Ultraschall Sensor)
