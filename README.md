@@ -31,6 +31,7 @@ MakeCode Projekt: **[calliope-net/fernsteuerung-s61](https://calliope-net.github
   * um den Winkel zu ändern **A+B halten**
   * danach mit **A halten** oder **B halten** den Wert ändern
   * wird im Flash gespeichert und beim Einschalten wieder hergestellt
+  * Servo Korrektur beenden mit Reset, neuer Wert muss angezeigt werden
 
 * nur wenn B aus ist: **A geklickt**
   * schaltet *Hindernis ausweichen* an und aus (Ultraschall Sensor)
