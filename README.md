@@ -6,14 +6,14 @@
 ### Hardware
 
 * **[Maker Kit Car](https://www.fischertechnik.de/de-de/maker#maker-kit-car)** | [digitale Bauanleitung](https://apps.fischer.de/ecom/fischertechnik/digitale-bauanleitungen/maker-kit-car.htm)
-* **[Calliope mini 3](https://calliope.cc/calliope-mini/calliope-mini-3)**
-* [Leiterplatte für Calliope mini 3 Pinleiste](https://forum.calliope.cc/t/mit-angesteckter-leiterplatte-wird-calliope-v3-zum-controller-fuer-fischertechnik-modelle/2913)
+* **[Calliope mini 3](https://calliope.cc/calliope-mini/calliope-mini-3)** | [Leiterplatte für Calliope mini 3 Pinleiste](https://forum.calliope.cc/t/mit-angesteckter-leiterplatte-wird-calliope-v3-zum-controller-fuer-fischertechnik-modelle/2913)
+  * optional [Qwiic Ultrasonic Distance Sensor](https://learn.sparkfun.com/tutorials/qwiic-ultrasonic-distance-sensor-hc-sr04-hookup-guide)
   * MakeCode Projekt: **[calliope-net/fernsteuerung-mkc-e63](https://calliope-net.github.io/fernsteuerung-mkc-e63/)**
 * Fernbedienung: **Calliope mini** v1 oder v2
-  * optional [SparkFun Qwiic Joystick](https://www.sparkfun.com/products/15168)
+  * optional [SparkFun Qwiic Joystick](https://learn.sparkfun.com/tutorials/qwiic-joystick-hookup-guide)
   * MakeCode Projekt: **[calliope-net/fernsteuerung-s61](https://calliope-net.github.io/fernsteuerung-s61/)**
 
-### Calli:bot 2 ohne Fernbedienung
+### Bedienung Maker Kit Car (ohne Fernsteuerung)
 
 * nach dem Einschalten wird die Funkgruppe, Typ und Batterie Spannung angezeigt
 * Beispiel 1: Funkgruppe 1; Typ 4 (Calli:bot 2 ohne Encoder); 3,8 Volt
@@ -57,7 +57,7 @@
 > Timeout sorgt dafür, dass Calli:bot stehen bleibt wenn beim fernsteuern die Bluetooth Verbindung unterbrochen ist
 > oder wenn er beim alleine fahren stecken bleibt.
 
-### Calli:bot 2 mit Fernbedienung
+### Bedienung Maker Kit Car (mit Fernsteuerung)
 
 > Bei Sender und Empfänger muss die selbe Funkgruppe eingestellt sein.
 
