@@ -72,7 +72,7 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
         receiver.selectRanging(false)
         btf.setLedColorsOff()
     }
-    receiver.setFunktion(receiver.eFunktion.ng)
+    receiver.setFunktion(receiver.eFunktion.ng, receiver.eTimeoutDisable.nicht)
     Ultraschall_Sensor_Knopf_A = false
     receiver.fahreJoystick(btf.btf_receivedBuffer19())
     receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
