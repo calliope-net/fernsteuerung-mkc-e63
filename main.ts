@@ -16,12 +16,11 @@ receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
 })
 input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
-        Stop = 50
+        Stop = 40
         receiver.setFunktion(receiver.eFunktion.hindernis_ausweichen)
     } else if (receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen)) {
         receiver.setFunktion(receiver.eFunktion.ng)
     } else if (receiver.isFunktion(receiver.eFunktion.spur_folgen)) {
-        Stop = 30
         Ultraschall_Sensor_Knopf_A = !(Ultraschall_Sensor_Knopf_A)
     }
 })
@@ -41,8 +40,11 @@ input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
+        Stop = 30
+        Ultraschall_Sensor_Knopf_A = true
         receiver.setFunktion(receiver.eFunktion.spur_folgen)
     } else if (receiver.isFunktion(receiver.eFunktion.spur_folgen)) {
+        Ultraschall_Sensor_Knopf_A = false
         receiver.setFunktion(receiver.eFunktion.ng)
     }
 })
