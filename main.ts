@@ -83,6 +83,7 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     btf.zeige5x5Buffer(receivedData)
     btf.zeige5x5Joystick(receivedData)
     receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
+    pins.pinDigitalWrite(pins.pins_eDigitalPins(pins.eDigitalPins.C16), !(btf.getSchalter(receivedData, btf.e0Schalter.b0)))
 })
 function Konfiguration () {
     btf.comment(btf.btf_text("GitHub: calliope-net/fernsteuerung-mkc-e63"))
@@ -116,6 +117,7 @@ loops.everyInterval(700, function () {
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.ab, false)
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.cd, false)
         receiver.ringTone(false)
+        pins.pinDigitalWrite(pins.pins_eDigitalPins(pins.eDigitalPins.C16), true)
     } else if (btf.timeout(1000, true)) {
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00)
     }
