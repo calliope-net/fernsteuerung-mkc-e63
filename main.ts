@@ -29,9 +29,10 @@ input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
         Ultraschall_Sensor_Knopf_A = receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen)
         receiver.setFunktion(receiver.eFunktion.fahrplan)
         if (Kreis_Knopf_AB) {
-            receiver.fahreStrecke(220, 3, 150, false)
+            receiver.fahreStrecke(153, 3, 153, false)
         } else {
-            receiver.fahreStrecke(220, 29, 150, false)
+            btf.comment(btf.btf_text("MKC ohne Encoder fährt Kreis"))
+            receiver.fahreStrecke(153, 29, 153, false)
         }
         receiver.pinServoGeradeaus()
         Kreis_Knopf_AB = !(Kreis_Knopf_AB)
