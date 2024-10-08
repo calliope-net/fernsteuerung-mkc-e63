@@ -25,14 +25,13 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     }
 })
 input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
-    if (receiver.isFunktion(receiver.eFunktion.ng) || receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen)) {
-        Ultraschall_Sensor_Knopf_A = receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen)
+    if (receiver.isFunktion(receiver.eFunktion.ng)) {
         receiver.setFunktion(receiver.eFunktion.fahrplan)
         if (Kreis_Knopf_AB) {
-            receiver.fahreStrecke(153, 3, 153)
+            receiver.fahreStrecke(153, 3, 153, true, 30)
         } else {
             btf.comment(btf.btf_text("MKC ohne Encoder fährt Kreis"))
-            receiver.fahreStrecke(153, 29, 153)
+            receiver.fahreStrecke(153, 29, 153, true, 30)
         }
         receiver.pinServoGeradeaus()
         Kreis_Knopf_AB = !(Kreis_Knopf_AB)
@@ -104,7 +103,7 @@ true,
 )
 Ultraschall_Sensor_Knopf_A = false
 basic.forever(function () {
-    receiver.buffer_raiseAbstandMotorStop(btf.btf_receivedBuffer19(), true, true, receiver.isFunktion(receiver.eFunktion.fahrplan), 30)
+    receiver.buffer_raiseAbstandMotorStop(btf.btf_receivedBuffer19(), true, false, false, 30)
     receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19())
     receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19())
     receiver.raiseAbstandEvent(receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen) || Ultraschall_Sensor_Knopf_A, Stop, Stop + 5)
