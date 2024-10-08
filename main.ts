@@ -104,7 +104,7 @@ true,
 )
 Ultraschall_Sensor_Knopf_A = false
 basic.forever(function () {
-    receiver.buffer_raiseAbstandMotorStop(btf.btf_receivedBuffer19(), false, true)
+    receiver.buffer_raiseAbstandMotorStop(btf.btf_receivedBuffer19(), true, true, receiver.isFunktion(receiver.eFunktion.fahrplan), 30)
     receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19())
     receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19())
     receiver.raiseAbstandEvent(receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen) || Ultraschall_Sensor_Knopf_A, Stop, Stop + 5)
