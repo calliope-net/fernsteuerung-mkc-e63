@@ -28,10 +28,10 @@ input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
         receiver.setFunktion(receiver.eFunktion.fahrplan)
         if (Kreis_Knopf_AB) {
-            receiver.fahreStrecke(153, 3, 153, true, 30)
+            btf.comment(receiver.fahreStrecke(153, 3, 153))
         } else {
             btf.comment(btf.btf_text("MKC ohne Encoder fährt Kreis"))
-            receiver.fahreStrecke(153, 29, 153, true, 30)
+            btf.comment(receiver.fahreStrecke(153, 29, 153))
         }
         receiver.pinServoGeradeaus()
         Kreis_Knopf_AB = !(Kreis_Knopf_AB)
@@ -79,14 +79,15 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     receiver.fahreJoystick(btf.btf_receivedBuffer19())
     receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
     if (btf.isBetriebsart(receivedData, btf.e0Betriebsart.p2Fahrplan)) {
+        btf.zeige5x5Betriebsart(true, false)
         receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
     } else {
-        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x0000ff, true, btf.isBetriebsart(receivedData, btf.e0Betriebsart.p0Fahren))
         btf.zeige5x5Buffer(receivedData)
         btf.zeige5x5Joystick(receivedData)
-        receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
-        pins.pinDigitalWrite(pins.pins_eDigitalPins(pins.eDigitalPins.C16), !(btf.getSchalter(receivedData, btf.e0Schalter.b0)))
     }
+    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x0000ff, true, btf.isBetriebsart(receivedData, btf.e0Betriebsart.p0Fahren))
+    receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
+    pins.pinDigitalWrite(pins.pins_eDigitalPins(pins.eDigitalPins.C16), !(btf.getSchalter(receivedData, btf.e0Schalter.b0)))
 })
 function Konfiguration () {
     btf.comment(btf.btf_text("GitHub: calliope-net/fernsteuerung-mkc-e63"))
@@ -106,6 +107,7 @@ true,
 )
 Ultraschall_Sensor_Knopf_A = false
 basic.forever(function () {
+    receiver.buffer_raiseAbstandMotorStop(btf.btf_receivedBuffer19(), true)
     receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19())
     receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19())
     receiver.raiseAbstandEvent(receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen) || Ultraschall_Sensor_Knopf_A, Stop, Stop + 5)
