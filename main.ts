@@ -28,10 +28,10 @@ input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
         receiver.setFunktion(receiver.eFunktion.fahrplan)
         if (Kreis_Knopf_AB) {
-            btf.comment(receiver.fahreStrecke(153, 3, 153))
+            btf.comment(receiver.fahreStrecke(192, 3, 153))
         } else {
-            btf.comment(btf.btf_text("MKC ohne Encoder fährt Kreis"))
-            btf.comment(receiver.fahreStrecke(153, 29, 153))
+            btf.comment(btf.btf_text("MKC ohne Encoder fährt Kreis 153 3|29 153"))
+            btf.comment(receiver.fahreStrecke(192, 29, 153))
         }
         receiver.pinServoGeradeaus()
         Kreis_Knopf_AB = !(Kreis_Knopf_AB)
