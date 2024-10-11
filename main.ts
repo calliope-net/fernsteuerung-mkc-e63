@@ -86,9 +86,9 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     Ultraschall_Sensor_Knopf_A = false
     receiver.fahreJoystick(btf.btf_receivedBuffer19())
     receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
+    receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
     if (btf.isBetriebsart(receivedData, btf.e0Betriebsart.p2Fahrplan)) {
         btf.zeige5x5Betriebsart(true, false)
-        receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
     } else {
         btf.zeige5x5Buffer(receivedData)
         btf.zeige5x5Joystick(receivedData)
