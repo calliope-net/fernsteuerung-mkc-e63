@@ -111,7 +111,8 @@ receiver.beimStart(
 receiver.eHardware.v3,
 95,
 true,
-65
+65,
+true
 )
 Ultraschall_Sensor_Knopf_A = false
 basic.forever(function () {
