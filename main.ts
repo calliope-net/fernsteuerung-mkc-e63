@@ -10,6 +10,7 @@ receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
     192,
     160,
     31,
+    0,
     abstand_Stop,
     cb2.cb2_zehntelsekunden(btf.ePause.s1)
     )
