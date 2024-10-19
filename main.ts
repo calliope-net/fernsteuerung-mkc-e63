@@ -7,8 +7,8 @@ receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
     receiver.isFunktion(receiver.eFunktion.spur_folgen),
     links_hell,
     rechts_hell,
+    240,
     192,
-    160,
     31,
     0,
     abstand_Stop,
@@ -75,10 +75,13 @@ receiver.onAbstandEvent(function (abstand_Sensor, abstand_Stop, cm) {
     16,
     64,
     0,
-    randint(5, 20)
+    randint(5, 15)
     )
     if (abstand_Stop) {
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), 0xff0000)
+        if (receiver.isFunktion(receiver.eFunktion.hindernis_ausweichen) || receiver.isFunktion(receiver.eFunktion.spur_folgen)) {
+            btf.zeigeBIN(cm, btf.ePlot.bcd, 4, 3)
+        }
     } else {
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), 0xffff00, abstand_Sensor)
     }
