@@ -35,9 +35,9 @@ input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
         Kreis_Knopf_AB = !(Kreis_Knopf_AB)
         if (receiver.is_v3_2Motoren()) {
             if (Kreis_Knopf_AB) {
-                btf.comment(receiver.fahreStrecke(255, 3, 125))
+                btf.comment(receiver.fahreStrecke(220, 3, 126))
             } else {
-                btf.comment(receiver.fahreStrecke(255, 29, 171))
+                btf.comment(receiver.fahreStrecke(220, 29, 171))
             }
         } else if (receiver.encoderConnected()) {
             if (Kreis_Knopf_AB) {
