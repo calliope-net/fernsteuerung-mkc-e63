@@ -5,7 +5,7 @@
     "dependencies": {
         "core": "*",
         "v3": "*",
-        "fernsteuerung": "github:calliope-net/fernsteuerung#v1.6.136"
+        "fernsteuerung": "github:calliope-net/fernsteuerung#v1.7.0"
     },
     "files": [
         "main.blocks",
