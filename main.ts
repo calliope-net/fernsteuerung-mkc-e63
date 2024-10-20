@@ -32,24 +32,30 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
 input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
         receiver.setFunktion(receiver.eFunktion.fahrplan)
-    }
-    if (receiver.encoderConnected()) {
-        if (Kreis_Knopf_AB) {
-            btf.comment(receiver.fahreStrecke(224, 3, 160, true))
+        Kreis_Knopf_AB = !(Kreis_Knopf_AB)
+        if (receiver.is_v3_2Motoren()) {
+            if (Kreis_Knopf_AB) {
+                btf.comment(receiver.fahreStrecke(255, 3, 125))
+            } else {
+                btf.comment(receiver.fahreStrecke(255, 29, 171))
+            }
+        } else if (receiver.encoderConnected()) {
+            if (Kreis_Knopf_AB) {
+                btf.comment(receiver.fahreStrecke(224, 3, 160, true))
+            } else {
+                btf.comment(receiver.fahreStrecke(224, 29, 160, true))
+            }
         } else {
-            btf.comment(receiver.fahreStrecke(224, 29, 160, true))
+            btf.comment(btf.btf_text("MKC ohne Encoder fährt Kreis 153 3|29 153"))
+            receiver.fahreStreckePicker(25, 175, 20)
+            receiver.fahreStreckePicker(-25, 175, 20)
+            receiver.fahreStreckePicker(50, 90, 20)
+            receiver.fahreStreckePicker(30, 10, 75)
+            receiver.fahreStreckePicker(-50, 90, 20)
         }
-    } else {
-        btf.comment(btf.btf_text("MKC ohne Encoder fährt Kreis 153 3|29 153"))
-        receiver.fahreStreckePicker(25, 175, 20)
-        receiver.fahreStreckePicker(-25, 175, 20)
-        receiver.fahreStreckePicker(50, 90, 20)
-        receiver.fahreStreckePicker(30, 10, 75)
-        receiver.fahreStreckePicker(-50, 90, 20)
+        receiver.pinServoGeradeaus()
+        receiver.setFunktion(receiver.eFunktion.ng)
     }
-    receiver.pinServoGeradeaus()
-    Kreis_Knopf_AB = !(Kreis_Knopf_AB)
-    receiver.setFunktion(receiver.eFunktion.ng)
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
