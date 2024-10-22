@@ -143,7 +143,14 @@ basic.forever(function () {
 })
 loops.everyInterval(700, function () {
     if (btf.timeout(30000, true)) {
-        receiver.pinRelay(false)
+        if (btf.isBetriebsart(btf.btf_receivedBuffer19(), btf.e0Betriebsart.p2Fahrplan)) {
+            receiver.dualMotor128(receiver.eDualMotor.M0_M1, 128)
+            btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00, true, true)
+            btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), Colors.Off, false)
+            btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.c), Colors.Off, false)
+        } else {
+            receiver.pinRelay(false)
+        }
     } else if (btf.timeout(1000)) {
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xff0000, true, true)
         receiver.dualMotor128(receiver.eDualMotor.M0_M1, 128)
