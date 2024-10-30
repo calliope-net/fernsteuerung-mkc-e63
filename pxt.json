@@ -1,5 +1,5 @@
 {
-    "name": "fernsteuerung-mkc-e73",
+    "name": "fernsteuerung-mkc-e63",
     "version": "1.5.0",
     "description": "",
     "dependencies": {
@@ -16,7 +16,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "7.0.3",
+        "target": "6.0.42",
         "targetId": "calliopemini"
     },
     "supportedTargets": [
