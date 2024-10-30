@@ -57,6 +57,9 @@ input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
         receiver.setFunktion(receiver.eFunktion.ng)
     }
 })
+receiver.onEncoderEvent(function (fahren, lenken, strecke, nr, ok, encoder) {
+    receiver.selectMotor128Servo16(fahren, lenken)
+})
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
         if (receiver.is_v3_2Motoren()) {
@@ -105,7 +108,6 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     Ultraschall_Sensor_Knopf_A = false
     receiver.fahreJoystick(btf.btf_receivedBuffer19())
     receiver.writeQwiicRelay(btf.getSchalter(receivedData, btf.e0Schalter.b1))
-    receiver.fahrplanBuffer5Strecken(btf.btf_receivedBuffer19(), btf.e3aktiviert.m1)
     if (btf.isBetriebsart(receivedData, btf.e0Betriebsart.p2Fahrplan)) {
         btf.zeige5x5Betriebsart(true, false)
     } else {
@@ -135,6 +137,7 @@ true
 )
 Ultraschall_Sensor_Knopf_A = false
 basic.forever(function () {
+    receiver.buffer_raiseEncoderEvent(btf.btf_receivedBuffer19())
     receiver.buffer_raiseAbstandMotorStop(btf.btf_receivedBuffer19(), true)
     receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19())
     receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19())
@@ -144,7 +147,7 @@ basic.forever(function () {
 loops.everyInterval(700, function () {
     if (btf.timeout(30000, true)) {
         if (btf.isBetriebsart(btf.btf_receivedBuffer19(), btf.e0Betriebsart.p2Fahrplan)) {
-            receiver.timeoutStrecke()
+        	
         } else {
             receiver.pinRelay(false)
         }
