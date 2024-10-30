@@ -1,11 +1,11 @@
 {
-    "name": "fernsteuerung-mkc-e63",
+    "name": "fernsteuerung-mkc-e73",
     "version": "1.5.0",
     "description": "",
     "dependencies": {
         "core": "*",
         "v3": "*",
-        "fernsteuerung": "github:calliope-net/fernsteuerung#v1.7.6"
+        "fernsteuerung": "github:calliope-net/fernsteuerung#v1.7.7"
     },
     "files": [
         "main.blocks",
@@ -16,7 +16,7 @@
         "test.ts"
     ],
     "targetVersions": {
-        "target": "6.0.42",
+        "target": "7.0.3",
         "targetId": "calliopemini"
     },
     "supportedTargets": [
