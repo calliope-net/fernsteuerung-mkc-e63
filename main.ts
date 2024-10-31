@@ -142,7 +142,7 @@ true
 )
 Ultraschall_Sensor_Knopf_A = false
 basic.forever(function () {
-    receiver.buffer_raiseEncoderEvent(btf.btf_receivedBuffer19())
+    receiver.buffer_raiseEncoderEvent(btf.btf_receivedBuffer19(), btf.btf_RadioPacketTime())
     receiver.buffer_raiseAbstandMotorStop(btf.btf_receivedBuffer19(), true)
     receiver.buffer_raiseAbstandEvent(btf.btf_receivedBuffer19())
     receiver.buffer_raiseSpurEvent(btf.btf_receivedBuffer19())
