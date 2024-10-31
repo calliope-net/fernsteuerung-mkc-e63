@@ -57,9 +57,6 @@ input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
         receiver.setFunktion(receiver.eFunktion.ng)
     }
 })
-receiver.onEncoderEvent(function (fahren, lenken, strecke, nr, ok, encoder) {
-    receiver.selectMotor128Servo16(fahren, lenken)
-})
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
         if (receiver.is_v3_2Motoren()) {
@@ -122,6 +119,14 @@ function Konfiguration () {
     btf.comment(btf.btf_text("GitHub: calliope-net/fernsteuerung-mkc-e63"))
     btf.comment(btf.btf_text("Erweiterung: calliope-net/fernsteuerung"))
 }
+receiver.onEncoderEvent(function (fahren, lenken, bp, ok, array) {
+    receiver.selectMotor128Servo16(fahren, lenken)
+    if (ok) {
+        btf.zeigeBIN_BufferPointer(bp, 2)
+    }
+    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), array[0])
+    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.c), array[1])
+})
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
 })
