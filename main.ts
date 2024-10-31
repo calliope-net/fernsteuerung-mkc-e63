@@ -157,6 +157,7 @@ loops.everyInterval(700, function () {
             receiver.pinRelay(false)
         }
     } else if (btf.timeout(1000)) {
+        btf.comment(btf.btf_text("nach 1s keine Bluetooth Daten empfangen"))
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xff0000, true, true)
         receiver.dualMotor128(receiver.eDualMotor.M0_M1, 128)
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.ab, false)
