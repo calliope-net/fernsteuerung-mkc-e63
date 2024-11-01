@@ -115,6 +115,25 @@ btf.onReceivedDataChanged(function (receivedData, changed) {
     receiver.ringTone(btf.getSchalter(receivedData, btf.e0Schalter.b0))
     pins.pinDigitalWrite(pins.pins_eDigitalPins(pins.eDigitalPins.C16), !(btf.getSchalter(receivedData, btf.e0Schalter.b0)))
 })
+function timeout_alt () {
+    if (btf.timeout(30000, true)) {
+        if (btf.isBetriebsart(btf.btf_receivedBuffer19(), btf.e0Betriebsart.p2Fahrplan)) {
+        	
+        } else {
+            receiver.pinRelay(false)
+        }
+    } else if (btf.timeout(1000)) {
+        btf.comment(btf.btf_text("nach 1s keine Bluetooth Daten empfangen"))
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xff0000, true, true)
+        receiver.dualMotor128(receiver.eDualMotor.M0_M1, 128)
+        receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.ab, false)
+        receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.cd, false)
+        receiver.ringTone(false)
+        pins.pinDigitalWrite(pins.pins_eDigitalPins(pins.eDigitalPins.C16), true)
+    } else if (btf.timeout(1000, true)) {
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00)
+    }
+}
 function Konfiguration () {
     btf.comment(btf.btf_text("GitHub: calliope-net/fernsteuerung-mkc-e63"))
     btf.comment(btf.btf_text("Erweiterung: calliope-net/fernsteuerung"))
@@ -150,13 +169,14 @@ basic.forever(function () {
     receiver.raiseSpurEvent(receiver.isFunktion(receiver.eFunktion.spur_folgen))
 })
 loops.everyInterval(700, function () {
-    if (btf.timeout(30000, true)) {
-        if (btf.isBetriebsart(btf.btf_receivedBuffer19(), btf.e0Betriebsart.p2Fahrplan)) {
-        	
-        } else {
-            receiver.pinRelay(false)
-        }
-    } else if (btf.timeout(1000)) {
+    if (false) {
+    	
+    } else if (btf.timeoutBuffer(btf.btf_receivedBuffer19(), btf.e0Betriebsart.p1Lokal, 10000)) {
+        receiver.pinRelay(false)
+    } else if (btf.timeoutBuffer(btf.btf_receivedBuffer19(), btf.e0Betriebsart.p2Fahrplan, 60000)) {
+        receiver.selectMotorStop()
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00, true, true)
+    } else if (btf.timeoutBuffer(btf.btf_receivedBuffer19(), btf.e0Betriebsart.p0Fahren, 1000)) {
         btf.comment(btf.btf_text("nach 1s keine Bluetooth Daten empfangen"))
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xff0000, true, true)
         receiver.dualMotor128(receiver.eDualMotor.M0_M1, 128)
@@ -164,7 +184,14 @@ loops.everyInterval(700, function () {
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.cd, false)
         receiver.ringTone(false)
         pins.pinDigitalWrite(pins.pins_eDigitalPins(pins.eDigitalPins.C16), true)
-    } else if (btf.timeout(1000, true)) {
+    } else if (btf.timeoutBuffer(btf.btf_receivedBuffer19(), btf.e0Betriebsart.p1Lokal, 1000)) {
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xffff00)
+    } else if (btf.timeoutBuffer(btf.btf_receivedBuffer19(), btf.e0Betriebsart.p2Fahrplan, 1000)) {
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00)
+    } else if (btf.timeout(20000)) {
+        btf.comment(btf.btf_text("kein Bluetooth Empfang (Buffer undefinded)"))
+        receiver.pinRelay(false)
+    } else if (btf.timeout(1000)) {
+        btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xff0080, true, true)
     }
 })
