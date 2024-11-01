@@ -169,31 +169,41 @@ basic.forever(function () {
     receiver.raiseSpurEvent(receiver.isFunktion(receiver.eFunktion.spur_folgen))
 })
 loops.everyInterval(700, function () {
-    if (btf.timeoutReceivedBuffer(btf.e0Betriebsart.p0Fahren, 30000)) {
+    if (btf.timeout(120000)) {
+        btf.comment(btf.btf_text("immer: nach 120s aus"))
+        receiver.pinRelay(false)
+    } else if (btf.timeoutReceivedBuffer(btf.e0Betriebsart.p0Fahren, 30000)) {
+        btf.comment(btf.btf_text("Fahren und Lenken: nach 30s aus"))
         receiver.pinRelay(false)
     } else if (btf.timeoutReceivedBuffer(btf.e0Betriebsart.p0Fahren, 1000)) {
-        btf.comment(btf.btf_text("nach 1s keine Bluetooth Daten empfangen"))
+        btf.comment(btf.btf_text("Fahren und Lenken: nach 1s keine Bluetooth Daten empfangen"))
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xff0000, true, true)
         receiver.dualMotor128(receiver.eDualMotor.M0_M1, 128)
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.ab, false)
         receiver.qwiicMotorChipPower(receiver.eQwiicMotorChip.cd, false)
         receiver.ringTone(false)
         pins.pinDigitalWrite(pins.pins_eDigitalPins(pins.eDigitalPins.C16), true)
-    } else if (btf.timeoutReceivedBuffer(btf.e0Betriebsart.p1Lokal, 10000)) {
+    } else if (btf.timeoutReceivedBuffer(btf.e0Betriebsart.p1Lokal, 20000)) {
+        btf.comment(btf.btf_text("Sensoren: nach 20s aus"))
         receiver.pinRelay(false)
     } else if (btf.timeoutReceivedBuffer(btf.e0Betriebsart.p1Lokal, 1000)) {
+        btf.comment(btf.btf_text("Sensoren: nach 1s gelb"))
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xffff00)
     } else if (btf.timeoutReceivedBuffer(btf.e0Betriebsart.p2Fahrplan, 60000)) {
+        btf.comment(btf.btf_text("Fahrplan: nach 60s Stop und grün blinken"))
         receiver.selectMotorStop()
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00, true, true)
     } else if (btf.timeoutReceivedBuffer(btf.e0Betriebsart.p2Fahrplan, 1000)) {
+        btf.comment(btf.btf_text("Fahrplan: nach 1s grün"))
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00)
     } else if (!(receiver.isFunktion(receiver.eFunktion.ng)) && btf.timeout(1000)) {
+        btf.comment(btf.btf_text("lokale Funktion gestartet, nach 1s weiß"))
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xffffff)
     } else if (btf.timeout(20000)) {
-        btf.comment(btf.btf_text("kein Bluetooth Empfang (Buffer undefinded)"))
+        btf.comment(btf.btf_text("kein Bluetooth Empfang (Buffer undefinded): nach 20s aus"))
         receiver.pinRelay(false)
     } else if (btf.timeout(1000)) {
+        btf.comment(btf.btf_text("kein Bluetooth Empfang (Buffer undefinded): nach 1s rot blinken"))
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0xff0080, true, true)
     }
 })
