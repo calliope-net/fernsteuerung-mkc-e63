@@ -141,10 +141,12 @@ function Konfiguration () {
 receiver.onEncoderEvent(function (fahren, lenken, bp, ok, array) {
     receiver.selectMotor128Servo16(fahren, lenken)
     if (ok) {
-        btf.zeigeBIN_BufferPointer(bp, 2)
+        btf.zeigeBIN_BufferPointer(bp)
     }
-    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), array[0])
-    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.c), array[1])
+    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), receiver.encoderArray(array, receiver.eEncoderArray.colorb))
+    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.c), receiver.encoderArray(array, receiver.eEncoderArray.colorc))
+    btf.zeigeBIN(Math.idiv(receiver.encoderArray(array, receiver.eEncoderArray.iLinks), receiver.encoderArray(array, receiver.eEncoderArray.encoderFaktor)), btf.ePlot.map, 3)
+    btf.zeigeBIN(Math.idiv(receiver.encoderArray(array, receiver.eEncoderArray.iRechts), receiver.encoderArray(array, receiver.eEncoderArray.encoderFaktor)), btf.ePlot.map, 4)
 })
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
