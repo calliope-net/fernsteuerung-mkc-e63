@@ -7,6 +7,8 @@ receiver.onEncoderEvent(function (fahren, lenken, array) {
     btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.c), receiver.encoderArray(array, receiver.eSelectEncoder.colorc))
     if (receiver.encoderArray(array, receiver.eSelectEncoder.status) == 2) {
         btf.zeigeBIN_BufferPointer(receiver.encoderArray(array, receiver.eSelectEncoder.bPointer))
+    }
+    if (receiver.encoderArray(array, receiver.eSelectEncoder.status) >= 2) {
         btf.zeigeBIN(Math.idiv(Math.abs(receiver.encoderArray(array, receiver.eSelectEncoder.iLinks)), receiver.encoderArray(array, receiver.eSelectEncoder.eFaktor)), btf.ePlot.map, 3)
         btf.zeigeBIN(Math.idiv(Math.abs(receiver.encoderArray(array, receiver.eSelectEncoder.iRechts)), receiver.encoderArray(array, receiver.eSelectEncoder.eFaktor)), btf.ePlot.map, 4)
     }
@@ -144,6 +146,14 @@ function timeout_alt () {
         btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.a), 0x00ff00)
     }
 }
+receiver.on2EncoderEvent(function (links, rechts, array) {
+    receiver.dual2Motoren128(links, rechts)
+    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.b), receiver.encoderArray(array, receiver.eSelectEncoder.colorb))
+    btf.setLedColors(btf.btf_RgbLed(btf.eRgbLed.c), receiver.encoderArray(array, receiver.eSelectEncoder.colorc))
+    if (receiver.encoderArray(array, receiver.eSelectEncoder.status) == 2) {
+        btf.zeigeBIN_BufferPointer(receiver.encoderArray(array, receiver.eSelectEncoder.bPointer))
+    }
+})
 function Konfiguration () {
     btf.comment(btf.btf_text("GitHub: calliope-net/fernsteuerung-mkc-e63"))
     btf.comment(btf.btf_text("Erweiterung: calliope-net/fernsteuerung"))
