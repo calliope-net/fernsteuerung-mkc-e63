@@ -1,3 +1,14 @@
+function macheEtwas () {
+    sender.send5Strecken(
+    btf.btf_receivedBuffer19(),
+    false,
+    1,
+    true,
+    btf.e3Abstand.u1,
+    sender.sender_1MotorPicker(70, 90, 50),
+    sender.sender_1MotorPicker(-50, 90, 50)
+    )
+}
 input.onButtonEvent(Button.AB, btf.buttonEventValue(ButtonEvent.Hold), function () {
     receiver.buttonABhold()
 })
