@@ -70,17 +70,55 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     }
 })
 input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
+    Kreis_Knopf_AB = !(Kreis_Knopf_AB)
     btf.zeigeBIN(0, btf.ePlot.bin, 4, 3)
     btf.create_receivedBuffer19()
-    sender.send2Motoren(
-    btf.btf_receivedBuffer19(),
-    false,
-    1,
-    true,
-    btf.e3Abstand.u1,
-    sender.sender_2MotorenPicker(50, -50, 25),
-    sender.sender_2MotorenPicker(-50, 50, 25)
-    )
+    if (receiver.is_v3_2Motoren()) {
+        sender.send2Motoren(
+        btf.btf_receivedBuffer19(),
+        true,
+        2,
+        false,
+        btf.e3Abstand.u1,
+        sender.sender_2MotorenPicker(50, -50, 25),
+        sender.sender_2MotorenPicker(-50, 50, 25)
+        )
+    } else if (receiver.encoderConnected()) {
+        if (Kreis_Knopf_AB) {
+            sender.send5Strecken(
+            btf.btf_receivedBuffer19(),
+            true,
+            1,
+            true,
+            btf.e3Abstand.u1,
+            sender.sender_1Motor(224, 3, 160)
+            )
+        } else {
+            sender.send5Strecken(
+            btf.btf_receivedBuffer19(),
+            true,
+            1,
+            true,
+            btf.e3Abstand.u1,
+            sender.sender_1Motor(224, 29, 160)
+            )
+        }
+    } else {
+        btf.comment(btf.btf_text("MKC ohne Encoder fährt Kreis 153 3|29 153"))
+        sender.send5Strecken(
+        btf.btf_receivedBuffer19(),
+        true,
+        1,
+        true,
+        btf.e3Abstand.u1,
+        sender.sender_1MotorPicker(25, 175, 20),
+        sender.sender_1MotorPicker(-25, 175, 20),
+        sender.sender_1MotorPicker(50, 90, 20),
+        sender.sender_1MotorPicker(30, 10, 20),
+        sender.sender_1MotorPicker(-50, 90, 20)
+        )
+    }
+    receiver.pinServoGeradeaus()
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
