@@ -13,6 +13,34 @@ receiver.onEncoderEvent(function (fahren, lenken, array) {
         btf.zeigeBIN(Math.idiv(Math.abs(receiver.encoderArray(array, receiver.eSelectEncoder.iRechts)), receiver.encoderArray(array, receiver.eSelectEncoder.eFaktor)), btf.ePlot.map, 4)
     }
 })
+function KnopfAB () {
+    if (receiver.isFunktion(receiver.eFunktion.ng)) {
+        receiver.setFunktion(receiver.eFunktion.fahrplan)
+        Kreis_Knopf_AB = !(Kreis_Knopf_AB)
+        if (receiver.is_v3_2Motoren()) {
+            if (Kreis_Knopf_AB) {
+                btf.comment(receiver.fahreStrecke(220, 3, 126))
+            } else {
+                btf.comment(receiver.fahreStrecke(220, 29, 171))
+            }
+        } else if (receiver.encoderConnected()) {
+            if (Kreis_Knopf_AB) {
+                btf.comment(receiver.fahreStrecke(224, 3, 160, true))
+            } else {
+                btf.comment(receiver.fahreStrecke(224, 29, 160, true))
+            }
+        } else {
+            btf.comment(btf.btf_text("MKC ohne Encoder fährt Kreis 153 3|29 153"))
+            receiver.fahreStreckePicker(25, 175, 20)
+            receiver.fahreStreckePicker(-25, 175, 20)
+            receiver.fahreStreckePicker(50, 90, 20)
+            receiver.fahreStreckePicker(30, 10, 75)
+            receiver.fahreStreckePicker(-50, 90, 20)
+        }
+        receiver.pinServoGeradeaus()
+        receiver.setFunktion(receiver.eFunktion.ng)
+    }
+}
 receiver.onSpurEvent(function (links_hell, rechts_hell, abstand_Stop) {
     receiver.buffer_Spur_folgen(btf.btf_receivedBuffer19(), links_hell, rechts_hell, abstand_Stop)
     receiver.event_Spur_folgen(
@@ -42,32 +70,19 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     }
 })
 input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
-    if (receiver.isFunktion(receiver.eFunktion.ng)) {
-        receiver.setFunktion(receiver.eFunktion.fahrplan)
-        Kreis_Knopf_AB = !(Kreis_Knopf_AB)
-        if (receiver.is_v3_2Motoren()) {
-            if (Kreis_Knopf_AB) {
-                btf.comment(receiver.fahreStrecke(220, 3, 126))
-            } else {
-                btf.comment(receiver.fahreStrecke(220, 29, 171))
-            }
-        } else if (receiver.encoderConnected()) {
-            if (Kreis_Knopf_AB) {
-                btf.comment(receiver.fahreStrecke(224, 3, 160, true))
-            } else {
-                btf.comment(receiver.fahreStrecke(224, 29, 160, true))
-            }
-        } else {
-            btf.comment(btf.btf_text("MKC ohne Encoder fährt Kreis 153 3|29 153"))
-            receiver.fahreStreckePicker(25, 175, 20)
-            receiver.fahreStreckePicker(-25, 175, 20)
-            receiver.fahreStreckePicker(50, 90, 20)
-            receiver.fahreStreckePicker(30, 10, 75)
-            receiver.fahreStreckePicker(-50, 90, 20)
-        }
-        receiver.pinServoGeradeaus()
-        receiver.setFunktion(receiver.eFunktion.ng)
-    }
+    btf.create_receivedBuffer19()
+    sender.send5Strecken(
+    btf.btf_receivedBuffer19(),
+    true,
+    sender.sender_1MotorPicker(50, 90, 20),
+    sender.sender_1MotorPicker(-50, 90, 20),
+    null,
+    null,
+    null,
+    1,
+    true,
+    btf.e3Abstand.u1
+    )
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
     if (receiver.isFunktion(receiver.eFunktion.ng)) {
@@ -161,8 +176,8 @@ function Konfiguration () {
 input.onButtonEvent(Button.A, btf.buttonEventValue(ButtonEvent.Hold), function () {
     btf.buttonAhold()
 })
-let Kreis_Knopf_AB = false
 let Stop = 0
+let Kreis_Knopf_AB = false
 let Ultraschall_Sensor_Knopf_A = false
 receiver.beimStart(
 receiver.eHardware.v3,
