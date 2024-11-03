@@ -73,15 +73,12 @@ input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
     btf.create_receivedBuffer19()
     sender.send5Strecken(
     btf.btf_receivedBuffer19(),
-    true,
-    sender.sender_1MotorPicker(50, 90, 20),
-    sender.sender_1MotorPicker(-50, 90, 20),
-    null,
-    null,
-    null,
+    false,
     1,
     true,
-    btf.e3Abstand.u1
+    btf.e3Abstand.u1,
+    sender.sender_1MotorPicker(70, 90, 50),
+    sender.sender_1MotorPicker(-50, 90, 50)
     )
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
