@@ -70,15 +70,16 @@ input.onButtonEvent(Button.A, input.buttonEventClick(), function () {
     }
 })
 input.onButtonEvent(Button.AB, input.buttonEventClick(), function () {
+    btf.zeigeBIN(0, btf.ePlot.bin, 4, 3)
     btf.create_receivedBuffer19()
-    sender.send5Strecken(
+    sender.send2Motoren(
     btf.btf_receivedBuffer19(),
     false,
     1,
     true,
     btf.e3Abstand.u1,
-    sender.sender_1MotorPicker(70, 90, 50),
-    sender.sender_1MotorPicker(-50, 90, 50)
+    sender.sender_2MotorenPicker(50, -50, 25),
+    sender.sender_2MotorenPicker(-50, 50, 25)
     )
 })
 input.onButtonEvent(Button.B, input.buttonEventClick(), function () {
